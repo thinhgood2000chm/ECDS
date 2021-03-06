@@ -31,4 +31,50 @@ exports.register = (req,res, next)=>{
 
 }
 
+
+exports.login=(req,res,next)=>{
+    var{email , password}= req.body;
+
+    User.findOne({email:email})
+    .then(user=>{
+        if(user){
+            bcrypt.compare(password,user.password,(err, result)=>{
+                if(err){
+                    res.json({
+                        error:err
+                    })
+                }
+                if(result){
+                    let token = jwt.sign({name: user.name},'secrectValue',{expiresIn:'1h'})
+                    res.cookie('jwt', token)
+                    console.log(token);
+                   /* res.json({
+                       message:"đăng nhập thành công",
+                      // token:token // gửi token
+                        token// ghi tắt lịa là thế này vì giống nhau
+
+                    })*/
+                    
+                   
+                    //req.session.user =email
+                   res.redirect("/admin")
+                }
+                else {
+                    
+                    res.json({
+                    message:"password không trùng khớp"
+                })
+                
+                    //res.redirect("/login")
+                }
+            })
+        }
+        else{
+            res.json({
+                message:'người dùng không tồn tại'
+            })
+        }
+    })
+}
+
 //module.exports=register
