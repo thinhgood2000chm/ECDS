@@ -6,6 +6,7 @@ const morgan = require("morgan")
 const session = require("express-session")
 const cookieParser = require("cookie-parser");
 const authRoute = require('./route/auth')
+const fetch = require("node-fetch")
 const port = process.env.PORT||3000
 
 mongoose.connect('mongodb://localhost:27017/shop',{useNewUrlParser:true, useUnifiedTopology:true})

@@ -29,5 +29,8 @@ router.get('/logout',(req,res)=>{
     res.clearCookie("jwt");
     res.redirect('/login')
 })
+router.get('/addProduct',(req,res)=>{
+    res.render('adProduct')
+})
 
 module.exports=router;
