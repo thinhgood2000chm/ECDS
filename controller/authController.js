@@ -26,8 +26,6 @@ exports.register = (req,res, next)=>{
             message:'loi ko them duoc tk'
         }))
     })
- 
-
 
 }
 
@@ -56,8 +54,10 @@ exports.login=(req,res,next)=>{
                     })*/
                     
                    
-                    //req.session.user =email
-                   res.redirect("/admin")
+                   
+                    req.session.user= email;
+                    req.session.password;
+                    res.redirect("/admin")
                 }
                 else {
                     
@@ -77,24 +77,1798 @@ exports.login=(req,res,next)=>{
     })
 }
 
-/*exports.addProduct=(req,res)=>{
-    var {name,size,color,amount, color2, color3,amount2,amount3}= req.body
-    //console.log(size,classify:[{ color, amount}]);
-    //res.send("ahiahi")
+exports.addProduct=(req,res)=>{
+    // chuyển từ String qua array
+    var inputSize = req.body.inputSize.split(/,| /) // tách chuổi để tạo thành mảng riêng từng phần tử 
+    var  inputColor= req.body.inputColor.split(/,| /) 
+    var inputAmount = req.body.inputAmount.split(/,| /)
+   // var inputSize = req.body.inputSize
+    console.log(inputSize);
+    console.log(inputColor);
+
+    var countColor =0 ;
+     var countSize = 0
+        for ( var i =0; i<inputColor.length;i++){
+            countColor = countColor +1
+           // console.log(inputColor[i]);
+        }
+        for( var j =0; j<inputSize.length;j++){
+            countSize= countSize +1
+            }
+           // console.log('count size', countSize);
+           // console.log('count color', countColor);
+
+        var {name,desc,price} = req.body
+        if(countColor==1){
+            if(countSize==1){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]}]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+            else if(countSize==2){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]}]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+            else if(countSize==3){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]}]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+            else if(countSize==4){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                            { size:inputSize[3], amount:inputAmount[3]},
+                         ]}]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+        }
+
+
+
+        if(countColor==2){
+            if(countSize==1){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]},
+                         {color: inputColor[1],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]}
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+            else if(countSize==2){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]},
+                         {color: inputColor[1],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]}
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+            else if(countSize==3){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]},
+                         {color: inputColor[1],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]}
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+            else if(countSize==4){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],
+                        classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                            { size:inputSize[3], amount:inputAmount[3]},
+                         ]},
+                        {color: inputColor[1],
+                        classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                            { size:inputSize[3], amount:inputAmount[3]},
+                         ]}
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+        }
    
-        let addProduct = new product({
-            name: name,
-            properties:[{size: size,classify:[{ color:color, amount:amount},{ color:color2, amount:amount2},{ color:color3, amount:amount3}]}]
-        })
-        addProduct.save()
-        .then(addProduct=>
-            res.json({
-                message: "them tk thanh cong"
-            })
-        )
-        .catch(error =>res.json({
-            message:'loi ko them duoc tk'
-        }))
-   
-}*/
-//module.exports=register
+        
+        if(countColor==3){
+            if(countSize==1){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]},
+                         {color: inputColor[1],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]},
+                         {color: inputColor[2],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]}
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+            else if(countSize==2){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]},
+                         {color: inputColor[1],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]},
+                         {color: inputColor[2],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]}
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+            else if(countSize==3){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]},
+                         {color: inputColor[1],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]},
+                         {color: inputColor[2],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]}
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+            else if(countSize==4){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],
+                        classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                            { size:inputSize[3], amount:inputAmount[3]},
+                         ]},
+                        {color: inputColor[1],
+                        classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                            { size:inputSize[3], amount:inputAmount[3]},
+                         ]},
+                         {color: inputColor[2],
+                            classify:[
+                                { size:inputSize[0], amount:inputAmount[0]},
+                                { size:inputSize[1], amount:inputAmount[1]},
+                                { size:inputSize[2], amount:inputAmount[2]},
+                                { size:inputSize[3], amount:inputAmount[3]},
+                             ]}
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+        }
+
+
+
+        if(countColor==4){
+            if(countSize==1){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]},
+                         {color: inputColor[1],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]},
+                         {color: inputColor[2],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]},
+                         {color: inputColor[3],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]}
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+            else if(countSize==2){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]},
+                         {color: inputColor[1],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]},
+                         {color: inputColor[2],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]},
+                         {color: inputColor[3],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]}
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+            else if(countSize==3){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]},
+                         {color: inputColor[1],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]},
+                         {color: inputColor[2],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]}
+                         ,{color: inputColor[3],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]}
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+            else if(countSize==4){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],
+                        classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                            { size:inputSize[3], amount:inputAmount[3]},
+                         ]},
+                        {color: inputColor[1],
+                        classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                            { size:inputSize[3], amount:inputAmount[3]},
+                         ]},
+                         {color: inputColor[2],
+                            classify:[
+                                { size:inputSize[0], amount:inputAmount[0]},
+                                { size:inputSize[1], amount:inputAmount[1]},
+                                { size:inputSize[2], amount:inputAmount[2]},
+                                { size:inputSize[3], amount:inputAmount[3]},
+                             ]},
+                             {color: inputColor[3],
+                                classify:[
+                                    { size:inputSize[0], amount:inputAmount[0]},
+                                    { size:inputSize[1], amount:inputAmount[1]},
+                                    { size:inputSize[2], amount:inputAmount[2]},
+                                    { size:inputSize[3], amount:inputAmount[3]},
+                                 ]}
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+        }
+
+
+
+
+        if(countColor==5){
+            if(countSize==1){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]},
+                         {color: inputColor[1],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]},
+                         {color: inputColor[2],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]},
+                         {color: inputColor[3],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]},
+                    
+                         {color: inputColor[4],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]}
+
+
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+            else if(countSize==2){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]},
+                         {color: inputColor[1],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]},
+                         {color: inputColor[2],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]},
+                         {color: inputColor[3],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]},
+                         {color: inputColor[4],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]}
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+            else if(countSize==3){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]},
+                         {color: inputColor[1],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]},
+                         {color: inputColor[2],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]}
+                         ,{color: inputColor[3],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]}
+                         ,{color: inputColor[4],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]}
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+            else if(countSize==4){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],
+                        classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                            { size:inputSize[3], amount:inputAmount[3]},
+                         ]},
+                        {color: inputColor[1],
+                        classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                            { size:inputSize[3], amount:inputAmount[3]},
+                         ]},
+                         {color: inputColor[2],
+                            classify:[
+                                { size:inputSize[0], amount:inputAmount[0]},
+                                { size:inputSize[1], amount:inputAmount[1]},
+                                { size:inputSize[2], amount:inputAmount[2]},
+                                { size:inputSize[3], amount:inputAmount[3]},
+                             ]},
+                             {color: inputColor[3],
+                                classify:[
+                                    { size:inputSize[0], amount:inputAmount[0]},
+                                    { size:inputSize[1], amount:inputAmount[1]},
+                                    { size:inputSize[2], amount:inputAmount[2]},
+                                    { size:inputSize[3], amount:inputAmount[3]},
+                                 ]},
+                            {color: inputColor[4],
+                            classify:[
+                                { size:inputSize[0], amount:inputAmount[0]},
+                                { size:inputSize[1], amount:inputAmount[1]},
+                                { size:inputSize[2], amount:inputAmount[2]},
+                                { size:inputSize[3], amount:inputAmount[3]},
+                            ]}
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+        }
+
+
+
+
+        if(countColor==5){
+            if(countSize==1){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]},
+                         {color: inputColor[1],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]},
+                         {color: inputColor[2],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]},
+                         {color: inputColor[3],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]},
+                    
+                         {color: inputColor[4],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]},
+                         {color: inputColor[5],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                         ]}
+
+
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+            else if(countSize==2){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]},
+                         {color: inputColor[1],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]},
+                         {color: inputColor[2],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]},
+                         {color: inputColor[3],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]},
+                         {color: inputColor[4],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]},
+                         {color: inputColor[5],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                         ]}
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+            else if(countSize==3){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]},
+                         {color: inputColor[1],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]},
+                         {color: inputColor[2],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]}
+                         ,{color: inputColor[3],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]}
+                         ,{color: inputColor[4],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]}
+                         ,{color: inputColor[5],classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                         ]}
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+            else if(countSize==4){
+                let addProduct = new product({
+                    name: name,
+                    price: price,
+                    description: desc,
+                    properties:[
+                        {color: inputColor[0],
+                        classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                            { size:inputSize[3], amount:inputAmount[3]},
+                         ]},
+                        {color: inputColor[1],
+                        classify:[
+                            { size:inputSize[0], amount:inputAmount[0]},
+                            { size:inputSize[1], amount:inputAmount[1]},
+                            { size:inputSize[2], amount:inputAmount[2]},
+                            { size:inputSize[3], amount:inputAmount[3]},
+                         ]},
+                         {color: inputColor[2],
+                            classify:[
+                                { size:inputSize[0], amount:inputAmount[0]},
+                                { size:inputSize[1], amount:inputAmount[1]},
+                                { size:inputSize[2], amount:inputAmount[2]},
+                                { size:inputSize[3], amount:inputAmount[3]},
+                             ]},
+                             {color: inputColor[3],
+                                classify:[
+                                    { size:inputSize[0], amount:inputAmount[0]},
+                                    { size:inputSize[1], amount:inputAmount[1]},
+                                    { size:inputSize[2], amount:inputAmount[2]},
+                                    { size:inputSize[3], amount:inputAmount[3]},
+                                 ]},
+                            {color: inputColor[4],
+                            classify:[
+                                { size:inputSize[0], amount:inputAmount[0]},
+                                { size:inputSize[1], amount:inputAmount[1]},
+                                { size:inputSize[2], amount:inputAmount[2]},
+                                { size:inputSize[3], amount:inputAmount[3]},
+                            ]},
+                            {color: inputColor[5],
+                                classify:[
+                                    { size:inputSize[0], amount:inputAmount[0]},
+                                    { size:inputSize[1], amount:inputAmount[1]},
+                                    { size:inputSize[2], amount:inputAmount[2]},
+                                    { size:inputSize[3], amount:inputAmount[3]},
+                                ]}
+                        ]
+                })
+                addProduct.save()
+                .then(addProduct=>
+                    res.json({
+                        message: "them tk thanh cong"
+                    })
+                )
+                .catch(error =>res.json({
+                    message:'loi ko them duoc tk'
+                }))
+            }
+        }
+
+
+}
+
+exports.deleteProduct=(req,res)=>{
+    if(!req.params.id)
+    res.json({code:1, message:"invalid data"})
+else 
+{
+    var id = req.params.id   
+    console.log(id);
+    product.findOneAndRemove(id)
+    .then(()=>
+        /*res.json({
+            message: "xóa người dùng thành công"
+        })*/
+        res.redirect('/product')
+    )
+    .catch(error =>res.json({
+        message:'xóa thất bại'
+    }))
+}
+}
+
+
+exports.updateProduct=(req,res)=>{
+    var inputSize = req.body.inputSize.split(/,| /) // tách chuổi để tạo thành mảng riêng từng phần tử 
+    var  inputColor= req.body.inputColor.split(/,| /) 
+    var inputAmount = req.body.inputAmount.split(/,| /)
+   // var inputSize = req.body.inputSize
+    console.log(inputSize);
+    console.log(inputColor);
+
+    var countColor =0 ;
+    var countSize = 0
+    for ( var i =0; i<inputColor.length;i++){
+        countColor = countColor +1
+         
+    }
+    for( var j =0; j<inputSize.length;j++){
+        countSize= countSize +1
+        }
+    let {id, name, price, desc}  = req.body
+    if(countColor==1){
+        if(countSize==1){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]}]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }
+
+        else if(countSize==2){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]}]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }
+
+        else if(countSize==3){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]}]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }
+
+        else if(countSize==4){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]}]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }         
+    }
+
+
+    if(countColor==2){
+        if(countSize==1){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }
+
+        else if(countSize==2){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }
+
+        else if(countSize==3){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }
+
+        else if(countSize==4){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>{
+            res.redirect('/product')
+            console.log("cập nhật thành công");
+            }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }         
+    }
+
+
+    if(countColor==3){
+        if(countSize==1){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]},
+                     {color: inputColor[2],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }
+
+        else if(countSize==2){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]},
+                     {color: inputColor[2],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }
+
+        else if(countSize==3){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]},
+                     {color: inputColor[2],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }
+
+        else if(countSize==4){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]},
+                     {color: inputColor[2],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }         
+    }
+
+    if(countColor==4){
+        if(countSize==1){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]},
+                     {color: inputColor[2],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]},
+                     {color: inputColor[3],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }
+
+        else if(countSize==2){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]},
+                     {color: inputColor[2],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]},
+                     {color: inputColor[3],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }
+
+        else if(countSize==3){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]},
+                     {color: inputColor[2],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]},
+                     {color: inputColor[3],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }
+
+        else if(countSize==4){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]},
+                     {color: inputColor[2],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]},
+                     {color: inputColor[3],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }         
+    }
+
+
+    if(countColor==5){
+        if(countSize==1){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]},
+                     {color: inputColor[2],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]},
+                     {color: inputColor[3],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]},
+                     {color: inputColor[4],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }
+
+        else if(countSize==2){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]},
+                     {color: inputColor[2],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]},
+                     {color: inputColor[3],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]},
+                     {color: inputColor[4],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }
+
+        else if(countSize==3){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]},
+                     {color: inputColor[2],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]},
+                     {color: inputColor[3],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]},
+                     {color: inputColor[4],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }
+
+        else if(countSize==4){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]},
+                     {color: inputColor[2],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]},
+                     {color: inputColor[3],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]},
+                     {color: inputColor[4],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }         
+    }
+
+
+    if(countColor==6){
+        if(countSize==1){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]},
+                     {color: inputColor[2],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]},
+                     {color: inputColor[3],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]},
+                     {color: inputColor[4],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]},
+                     {color: inputColor[5],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }
+
+        else if(countSize==2){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]},
+                     {color: inputColor[2],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]},
+                     {color: inputColor[3],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]},
+                     {color: inputColor[4],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]},
+                     {color: inputColor[5],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }
+
+        else if(countSize==3){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]},
+                     {color: inputColor[2],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]},
+                     {color: inputColor[3],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]},
+                     {color: inputColor[4],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]},
+                     {color: inputColor[5],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]}
+                     ]},
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }
+
+        else if(countSize==4){
+            let updateData = {
+                name: name,
+                price: price,
+                description: desc,
+                properties:[
+                    {color: inputColor[0],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]},
+                     {color: inputColor[1],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]},
+                     {color: inputColor[2],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]},
+                     {color: inputColor[3],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]},
+                     {color: inputColor[4],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]},
+                     {color: inputColor[5],classify:[
+                        { size:inputSize[0], amount:inputAmount[0]},
+                        { size:inputSize[1], amount:inputAmount[1]},
+                        { size:inputSize[2], amount:inputAmount[2]},
+                        { size:inputSize[3], amount:inputAmount[3]}
+                     ]}
+                    ]
+            }
+            product.findByIdAndUpdate(id,{$set: updateData})
+            .then(()=>
+            {
+                res.redirect('/product')
+                console.log("cập nhật thành công");
+                }
+            )
+            .catch(error =>res.json({
+                message:'lỗi không cập nhật thành công'
+            }))
+        }         
+    }
+}
+

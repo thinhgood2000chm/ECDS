@@ -4,21 +4,21 @@ const Schema = mongoose.Schema;
 const productSchema = new Schema({
     /*id :{
         type: String
-    },
-    name :{
-        type: String
-    },
-    cost :Number,
-    /*image :{
-        type: String
     },*/
     name :{
         type: String
     },
+    price :Number,
+    /*image :{
+        type: String
+    },*/
+    description :{
+        type: String
+    },
     properties:[{
-        size: String,
+        color: String,
         classify:[{
-            color: String,
+            size: String,
             amount: Number
         }]
         
