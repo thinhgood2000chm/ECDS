@@ -9,9 +9,9 @@ const productSchema = new Schema({
         type: String
     },
     price :Number,
-    /*image :{
+    image :{
         type: String
-    },*/
+    },
     description :{
         type: String
     },

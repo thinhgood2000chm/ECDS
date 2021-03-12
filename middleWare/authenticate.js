@@ -1,5 +1,6 @@
  const e = require("express");
 const jwt = require("jsonwebtoken");
+
 const { unsubscribe } = require("../route/auth");
  const authenticate=(req,res,next)=>{
     // try {
