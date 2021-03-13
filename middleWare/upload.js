@@ -1,5 +1,5 @@
 const multer = require('multer');
-var upload = //()=>{
+var upload = 
     multer({dest:'upload', fileFilter:(req,file,callback)=>{// kiểm tra nếu là ảnh thì cho phép upload vs giá tri mimetype là image
     console.log(file);
     if(file.mimetype.startsWith('image/')){
@@ -7,6 +7,6 @@ var upload = //()=>{
     }
     else
     callback(null, false)   
-},limits: {fileSize:5000000}})
+},limits: {fileSize:5000000000}})
 //}
 module.exports= upload

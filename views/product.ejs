@@ -33,9 +33,6 @@
       background-color: #ff9933;
       margin: 20px;
   }
-  
- 
-
 
 
   </style>
@@ -102,10 +99,11 @@
 
     <div class="col-md-3">
       <% product.forEach(p=>{%>
-     
-        <div id="card1" class="card" style="width:200px"><a class="stretched-link"href="/inforDetail"></a>
+       
+
+        <div id="card1" class="card" style="width:200px">
           
-            <img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width:100%">
+            <img class="card-img-top" src="<%=p.image%>" alt="Card image" style="width:100%">
         
           <div class="card-body">
             <h4 class="card-title"><%=p.name%></h4>
@@ -116,9 +114,13 @@
           <div class="card-footer">
          </div>  
     </div>
-    <button  id="update" ><a href="/update/<%=p._id%>">chỉnh sửa</a> </button>   <button id="btnDelete" ><a href="/delete/<%=p._id%>">xóa</a></button>
-   
+    <button  id="update" ><a href="/update/<%=p._id%>">chỉnh sửa</a> </button>   
+    <button  id="btnDelete"><a href="/delete/<%=p._id%>">xóa</a></button>
+    <button id="detail" ><a href="detail/<%=p._id%>">chi tiết</a></button>
+    
     <%})%>
+
+
     </div>
     </div>
 
@@ -134,7 +136,17 @@
         $("#card1").css("box-shadow", "none");
     })
 
-
+   /* $("#detail").click((e)=>{
+        var btn = e.target
+        const id= btn.dataset.id
+        console.log(id);
+        fetch('http://localhost:3000/detail/'+ id, {
+        method:"get"
+      })
+      .then(res=>console.log(e))
+      .catch(e=>console.log(e))
+    })
+    */
 </script>
 </body>
 </html>

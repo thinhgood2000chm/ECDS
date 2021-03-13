@@ -31,9 +31,6 @@ router.get("/cart",(req,res)=>{
     res.render('cart')
 })
 
-router.get("/detail",(req,res)=>{
-    res.render('detail')
-})
 
 router.get('/logout',(req,res)=>{
     res.clearCookie("jwt");
@@ -47,10 +44,24 @@ router.get('/addProduct',(req,res)=>{
 })
 router.get('/update/:id', (req,res)=>{
     var id = req.params.id;
+    console.log("id: ",id);
+    console.log(id);
     Products.findById(id,(err,result)=>{
         res.render('update',{result})
     })
    
+})
+
+
+router.get("/detail/:id",(req,res)=>{
+    const id2 = req.params.id;
+    console.log(id2);
+    Products.findById(id2,(err,result)=>{
+        res.render('detail',{result})
+    })
+
+
+    
 })
 
 

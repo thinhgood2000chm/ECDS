@@ -35,14 +35,11 @@ app.use(session({
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
+app.use(express.static('upload'));
 
 
 
 app.set("view engine", "ejs");
-
-
-
-
 
 app.use("/", require('./route/page'));
 

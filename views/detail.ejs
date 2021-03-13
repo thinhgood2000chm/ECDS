@@ -47,18 +47,18 @@
 </head>
 
 <body>
-    <div class =container>
+    <div class ="container">
+
     <div class="row">
-        
+        <input type="hidden" id="id" name = "id" value= "<%=result._id%>">
             <div class="col-md-6">
-                <img src="" alt="">
-                <P>tád</P>
+                <!--<img src="<%=result.image%>" alt="ảnh mẫu"> -->
             </div>
 
             <div id="detail" class="col-md-6">
-                <h3><b>ÁO SƠ MI NAM</b></h3>
+                <h3><b><%=result.name%></b></h3>
                 <hr>
-                <h4>giá tiền:<span id="cost">400000</span></h4>
+                <h4>giá tiền:<span id="cost"><%=result.price%></span></h4>
                 <hr>
                 <div class="row">
                         <div class="col-md-3">
@@ -67,12 +67,10 @@
                 
                 </div>
 
-                    <div class="colmd-3" id="checkbox">
-                        <input id="check1"type="checkbox">  màu đỏ<span id="dot1" class="dot"></span> </input> 
+                    <div class="colmd-3" id="createCheckBox">
+                    
+                        <input id="check1"type="checkbox"><%=result.properties[0].color%> <span id="dot1" class="dot"></span> </input> 
                         <br>
-                        <input id="check2" type="checkbox">  màu xanh dương<span id="dot2" class="dot"></span> </input>
-                        <br>
-                        <input id="check3" type="checkbox">  màu vàng<span id="dot3" class="dot"></span> </input>
 
                     </div>  
                     </div>
@@ -93,23 +91,24 @@
                 <button id="btnChangeAmountMinus"class="btn btn-light" value="-">-</button><input type="text" value="1" id="amount"><button id="btnChangeAmountPlus" class="btn btn-light" value="+">+</button>
                 <br>
                 <br>
-                <button id="btnAddNew"class="btn btn-dark " >THÊM VÀO GIỎ HÀNG</button>
+                <button id="btnAddNew"class="btn btn-dark">THÊM VÀO GIỎ HÀNG</button>
 
-                <p><b>Mô tả</b></p>
-                – Chất liệu:  60% COTTON, 20% RAYON, 20% POLYESTER<br>
-                – Màu sắc: xanh da trời, hông, trắng kem<br>
-
-                – Có đầy đủ các size: M – L – XL – XXL
+                <p><b><%=result.description%></b></p>
+               
               
             </div>
 
         
     </div>
+
+
+
+
     <h4><center>SẢN PHẨM LIÊN QUAN</center></h4>
-    <div class="row">
-    <div  class="card col-lg-2 col-md-4 col-sm-6" style="width:200px"><a class="stretched-link"href="/inforDetail"></a>
+    <!--<div class="row">
+    <div  class="card col-lg-2 col-md-4 col-sm-6" style="width:200px">
           
-        <img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width:100%">
+        <img class="card-img-top" src="img_avatar2.png" alt="Card image" style="width:100%">
     
       <div class="card-body">
         <h4 class="card-title">tên sản phẩm</h4>
@@ -120,62 +119,14 @@
         <div class="card-footer">
      
         </div>
-    </div>
-
-    
-    <div  class="card col-lg-2 col-md-4 col-sm-6" style="width:200px"><a class="stretched-link"href="/inforDetail"></a>
-          
-        <img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width:100%">
-    
-      <div class="card-body">
-        <h4 class="card-title">tên sản phẩm</h4>
-        <p class="card-text">giá tiền</p>
-        <h5>$24.99</h5>
-        
-      </div>
-        <div class="card-footer">
-     
-        </div>
-    </div>
-    
-
-    <div class="card col-lg-2 col-md-4 col-sm-6" style="width:200px"><a class="stretched-link"href="/inforDetail"></a>
-          
-        <img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width:100%">
-    
-      <div class="card-body">
-        <h4 class="card-title">tên sản phẩm</h4>
-        <p class="card-text">giá tiền</p>
-        <h5>$24.99</h5>
-        
-      </div>
-        <div class="card-footer">
-     
-        </div>
-    </div>
-    
-
-    <div  class="card col-lg-2 col-md-4 col-sm-6" style="width:200px"><a class="stretched-link"href="/inforDetail"></a>
-          
-        <img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width:100%">
-    
-      <div class="card-body">
-        <h4 class="card-title">tên sản phẩm</h4>
-        <p class="card-text">giá tiền</p>
-        <h5>$24.99</h5>
-        
-      </div>
-        <div class="card-footer">
-     
-        </div>
-    </div>
-    
-    
-</div>
+    </div> 
+    </div>-->
 
 </div>
 
 <script>
+
+
 
     var cost = parseInt(document.getElementById("cost").textContent);
     // thiết lập sự kiện cho nút + -
@@ -206,7 +157,7 @@
     })
 
 ///// thêm cái chức năng khi bấm chọn màu nếu chọn trên 2 màu thì tăng số lượng lên-------------------cái này sai nhé làm lại
-$("#checkbox").click(()=>{
+/*$("#checkbox").click(()=>{
     var check1= document.getElementById("check1")
     var check2= document.getElementById("check2")
     var check3= document.getElementById("check3")
@@ -233,8 +184,8 @@ $("#checkbox").click(()=>{
   /* else if(('#check1').prop("checked",true) &&$('#check2').prop("checked",true)||('#check1').prop("checked",true) && $('#check3').prop("checked",true)||('#check2').prop("checked",true) && $('#check3').prop("checked",true) )
    {
     amount = amount+2;
-}*/
-})
+}
+})*/
    
    
 
@@ -247,6 +198,8 @@ $("#checkbox").click(()=>{
     $("#btnAddNew").mouseout(()=>{
         $("#btnAddNew").css({"background-color":"#1a1a1a","border-color":"black","color":"white"})
     })
+
+
 </script>
 </body>
 </html>

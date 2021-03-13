@@ -89,6 +89,8 @@ exports.addProduct=(req,res)=>{
         console.log(image)
          pathImage= `upload/${image.originalname}`
         fs.renameSync(image.path, pathImage)
+        var image = pathImage.slice(7)
+
         //console.log(pathImage);
   
 
@@ -122,7 +124,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -144,7 +146,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -166,7 +168,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -189,7 +191,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -218,7 +220,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -243,7 +245,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -270,7 +272,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -299,7 +301,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],
@@ -336,7 +338,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -364,7 +366,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -395,7 +397,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -429,7 +431,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],
@@ -474,7 +476,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -505,7 +507,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -540,7 +542,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -579,7 +581,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],
@@ -632,7 +634,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -669,7 +671,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -708,7 +710,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -752,7 +754,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],
@@ -812,7 +814,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -852,7 +854,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -895,7 +897,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],classify:[
@@ -944,7 +946,7 @@ exports.addProduct=(req,res)=>{
                 let addProduct = new product({
                     name: name,
                     price: price,
-                    image: pathImage,
+                    image: image,
                     description: desc,
                     properties:[
                         {color: inputColor[0],
@@ -1028,6 +1030,16 @@ else
 
 
 exports.updateProduct=(req,res)=>{
+       //let sp = req.body;
+     
+
+
+    var img = req.file;
+    console.log(img);
+     image= `upload/${img.originalname}`
+    fs.renameSync(img.path, image)
+    var pathImage = image.slice(7)
+
     var inputSize = req.body.inputSize.split(/,| /) // tách chuổi để tạo thành mảng riêng từng phần tử 
     var  inputColor= req.body.inputColor.split(/,| /) 
     var inputAmount = req.body.inputAmount.split(/,| /)
@@ -1045,7 +1057,7 @@ exports.updateProduct=(req,res)=>{
         countSize= countSize +1
         }
     let {id, name, price, desc }  = req.body
-    let pathImage = req.body.image
+
     if(countColor==1){
         if(countSize==1){
             let updateData = {
