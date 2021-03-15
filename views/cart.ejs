@@ -12,6 +12,7 @@
     <title>cart</title>
 </head>
 <body>
+    <form action="/payment" method="post"> 
     <div class="container">
     <table class="table  table-hover" >
         <thead>
@@ -23,27 +24,23 @@
               <th>màu sắc</th>
               <th>giá</th>
               <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
+              <%ucah.forEach(data=>{%>
+                <input type="hidden" id= "id" name="id"value="><%=data._id%>">
             <tr>
                 <td><i id="delete" class="fa fa-trash-o" style="font-size:24px"></i></td>
-              <td><img src="" alt=""></td>
-              <td>quan nam </td>
-              <td>1</td>
-              <td>trắng</td>
-              <td>400000</td>
+              <td><img src="<%=data.image%>" alt="" width="100px" height="100px"></td>
+              <td><%=data.name%> </td>
+              <td><%=data.amount%></td>
+              <td><%=data.color%></td>
+              <td><%=data.price%></td>
               <td><input type="checkbox" name="checkbox" id="checkbox"></td>
+              <td><input type="hidden" value="" id="checkBoxchecked" name = checkBoxchecked></td>
             </tr>
-            <tr>
-                <td> <i id="delete" class="fa fa-trash-o" style="font-size:24px"></i></td>
-                <td><img src="" alt=""></td>
-                <td>quan nam </td>
-                <td>1</td>
-                <td>trắng</td>
-                <td>400000</td>
-                <td><input type="checkbox" name="checkbox" id="checkbox"></td>
-              </tr>
+            <%})%>
     
             </tbody>
     </table>
@@ -56,8 +53,12 @@
         <div class="col"><button class="btn btn-success">THANH TOÁN</button></div>
     </div>
 </div>
-
-
+</form>
+<%if(user){%>
+    <p><%=user.name%></p>
+    <a href="/logout">logout</a>
+    <p> đây là trang admin</p>
+    <%}%>
 
 <script>
 
@@ -68,6 +69,16 @@ $("#btnApply").mouseover(()=>{
 $("#btnApply").mouseout(()=>{
     $("#btnApply").css({"background-color":"#1a1a1a","border-color":"black","color":"white"})
 })
+$("#checkbox").click(()=>{
+    if($("#checkbox").prop("checked") == true){
+        console.log("đã vào đây");
+        //$("#checkBoxchecked").html("true")
+        document.getElementById("checkBoxchecked").value="true"
+    }
+    else   $("#checkBoxchecked").html("false")
+})
+
+
 
 </script>
 </body>

@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
     // try {
          
         const token = req.cookies.jwt;
+        //const user= req.cookies.user;
         if(token){
             jwt.verify(token,'secrectValue',(err, decode)=>{
                 if(err){

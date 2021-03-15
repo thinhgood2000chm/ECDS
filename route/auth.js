@@ -8,4 +8,6 @@ router.post('/login', authController.login)
 router.post('/addProduct',upload.single('image'),authController.addProduct)
 router.post('/delete',authController.deleteProduct)
 router.post('/update',upload.single('image'),authController.updateProduct)
+router.post('/detail', authController.InsertCart)
+router.post('/payment', authController.payment)
 module.exports=router

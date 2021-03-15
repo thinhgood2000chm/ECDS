@@ -6,9 +6,11 @@ const bcrypt= require("bcryptjs")
 const jwt =  require("jsonwebtoken");
 const upload = require("../middleWare/upload");
 const product = require("../models/product")
-const fs = require('fs')
+const cartAndHistory= require('../models/userCartAndHistory')
+const fs = require('fs');
+const session = require("express-session");
 exports.register = (req,res, next)=>{
-    var {password, name, email, confirmPassword} = req.body; 
+    var {password, name, email, phone, confirmPassword} = req.body; 
     bcrypt.hash(password, 10 , (err, hashedPass)=>{
         if(err){
             res.json({
@@ -18,14 +20,16 @@ exports.register = (req,res, next)=>{
         let user = new User({
             name : name,
             email :email,
+            phone:phone,
             password:hashedPass
         }) 
     
         user.save()
         .then(user=>
-            res.json({
+            /*res.json({
                 message: "them tk thanh cong"
-            })
+            })*/
+            res.redirect('/login')
         )
         .catch(error =>res.json({
             message:'loi ko them duoc tk'
@@ -48,8 +52,10 @@ exports.login=(req,res,next)=>{
                     })
                 }
                 if(result){
-                    let token = jwt.sign({name: user.name},'secrectValue',{expiresIn:'1h'})
+                    let token = jwt.sign({id: user._id},'secrectValue',{expiresIn:'1h'})
                     res.cookie('jwt', token)
+                    res.cookie('user',user.email)
+                    //req.session.phone
                     console.log(token);
                    /* res.json({
                        message:"đăng nhập thành công",
@@ -57,12 +63,10 @@ exports.login=(req,res,next)=>{
                         token// ghi tắt lịa là thế này vì giống nhau
 
                     })*/
-                    
-                   
-                   
-                    req.session.user= email;
-                    req.session.password;
-                    res.redirect("/admin")
+                    if(user.email.includes("admin752")){
+                        res.redirect("/admin")
+                    }
+                    else res.redirect('/cart')
                 }
                 else {
                     
@@ -83,13 +87,16 @@ exports.login=(req,res,next)=>{
 }
 
 exports.addProduct=(req,res)=>{
-
+             //let sp = req.body;
+             images = req.file;
+             console.log(images)
+             pathImage= `public/upload/${images.originalname}`
+            // console.log(image);
+             fs.renameSync(images.path,pathImage)
+             var image = pathImage.slice(6)
+             
         //let sp = req.body;
-        image = req.file;
-        console.log(image)
-         pathImage= `upload/${image.originalname}`
-        fs.renameSync(image.path, pathImage)
-        var image = pathImage.slice(7)
+    
 
         //console.log(pathImage);
   
@@ -1031,14 +1038,13 @@ else
 
 exports.updateProduct=(req,res)=>{
        //let sp = req.body;
-     
 
 
     var img = req.file;
     console.log(img);
-     image= `upload/${img.originalname}`
+     image= `public/upload/${img.originalname}`
     fs.renameSync(img.path, image)
-    var pathImage = image.slice(7)
+    var pathImage = image.slice(6)
 
     var inputSize = req.body.inputSize.split(/,| /) // tách chuổi để tạo thành mảng riêng từng phần tử 
     var  inputColor= req.body.inputColor.split(/,| /) 
@@ -1952,3 +1958,59 @@ exports.updateProduct=(req,res)=>{
     }
 }
 
+
+exports.InsertCart= (req,res)=>{
+    const token= req.cookies.jwt;
+    var{id, name, amount, price,color,size,image} = req.body
+    if(token){
+        jwt.verify(token,'secrectValue', async (err, decode)=>{
+                //console.log(decode);
+                let user = await User.findById(decode.id)
+                let addNewCAH = new cartAndHistory({
+                    idFromProduct: id,
+                    nameUser: user.name,
+                    email: user.email,
+                    phone:user.phone,
+                    check: "false",
+                    name: name ,
+                    image: image,
+                    price: price,
+                    color: color,
+                    size: size,
+                    amount: amount
+                })
+                addNewCAH.save()
+                .then(addNewCAH=>
+                    res.redirect('/cart')
+                )
+                .catch(error =>res.json({
+                     message:'loi ko them duoc tk'
+                }))
+              
+            
+        })
+
+     
+    }else {
+        res.redirect('/login')
+    }
+}
+
+exports.payment= (req,res)=>{
+    var {id,checkBoxchecked}=req.body
+    if(checkBoxchecked==="true"){
+        cartAndHistory.findByIdAndUpdate(id,{check:checkBoxchecked})
+        .then(()=>
+        {
+            res.json({
+                message:'capj nhaatj thanh cong'
+            })
+        
+            }
+        )
+        .catch(error =>res.json({
+            message:'lỗi không cập nhật thành công'
+        }))
+    }
+
+}

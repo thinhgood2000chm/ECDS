@@ -7,7 +7,14 @@
     <title>Document</title>
 </head>
 <body>
-    <h3>đây là trang admin</h3>
+    <%if(user){%>
+    <p><%=user.name%></p>
     <a href="/logout">logout</a>
+    <p> đây là trang admin</p>
+    <%}%>
+    
+ 
+    
+    
 </body>
 </html>

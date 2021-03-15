@@ -7,7 +7,7 @@ const session = require("express-session")
 const cookieParser = require("cookie-parser");
 const authRoute = require('./route/auth')
 const fetch = require("node-fetch")
-
+const check = require('./middleWare/checkUser')
 const port = process.env.PORT||3000
 
 mongoose.connect('mongodb://localhost:27017/shop',{useNewUrlParser:true, useUnifiedTopology:true})
@@ -35,14 +35,14 @@ app.use(session({
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
-app.use(express.static('upload'));
+
 
 
 
 app.set("view engine", "ejs");
-
+app.get('*',check)
 app.use("/", require('./route/page'));
-
+app.use(express.static('public'));
 app.use("/",authRoute)
 
 

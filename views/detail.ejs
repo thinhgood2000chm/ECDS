@@ -50,30 +50,31 @@
     <div class ="container">
 
     <div class="row">
+        <form action="/detail" method="post">
         <input type="hidden" id="id" name = "id" value= "<%=result._id%>">
             <div class="col-md-6">
-                <!--<img src="<%=result.image%>" alt="ảnh mẫu"> -->
+                <img src="<%=result.image%>" alt="ảnh mẫu"><input type="hidden" name ="image" value ="<%=result.image%>" >
             </div>
 
             <div id="detail" class="col-md-6">
-                <h3><b><%=result.name%></b></h3>
+                <h3><b><%=result.name%></b></h3><input type="hidden" name ="name" value ="<%=result.name%>" >
                 <hr>
-                <h4>giá tiền:<span id="cost"><%=result.price%></span></h4>
+                <h4>giá tiền:<span id="cost"><%=result.price%></span></h4><input type="hidden" id="price" value ="" name ="price">
                 <hr>
                 <div class="row">
                         <div class="col-md-3">
-                    <p><b>màu sắc:</b> </p>
-
-                
-                </div>
-
-                    <div class="colmd-3" id="createCheckBox">
-                    
-                        <input id="check1"type="checkbox"><%=result.properties[0].color%> <span id="dot1" class="dot"></span> </input> 
-                        <br>
-
-                    </div>  
+                        <p><b>màu sắc:</b> </p>
+                        </div>
+                    <div id="createRadioColorParent">
+                        <div id="createRadioColor">
+                        <input type="hidden" id ="lengthPeroperties" name = "colorInput" value="">
+                            <%result.properties.forEach(prop=>{%>
+                                <input type="radio" class="color" name="color" value="<%=prop.color%>">
+                        <label for="male"><%=prop.color%></label><br>
+                           <% })%>
                     </div>
+                    </div>
+             </div>
             
                 <hr>
                 <div class="row">
@@ -83,22 +84,27 @@
             
                 </div>
                 <div class="colmd-3">
-                    <div class="btn btn-light">X</div> <div class="btn btn-light">L</div> <div class="btn btn-light">L</div>
+                    <% result.properties[0].classify.forEach(c=>{%>
+                        <div class="btn btn-light" id= "btnSize" name="btnSize" value="<%=c.size%>"><%=c.size%></div> 
+                    <%})%>
+                <input type="hidden" name ="size"id ="size" value ="" >
 
                 </div>  
                 </div>
 
-                <button id="btnChangeAmountMinus"class="btn btn-light" value="-">-</button><input type="text" value="1" id="amount"><button id="btnChangeAmountPlus" class="btn btn-light" value="+">+</button>
+                <button type ="button" id="btnChangeAmountMinus"class="btn btn-light" value="-">-</button>
+                <input type="text" name ="amount" value="1" id="amount">
+                <button id="btnChangeAmountPlus" type ="button" class="btn btn-light" value="+">+</button>
                 <br>
                 <br>
-                <button id="btnAddNew"class="btn btn-dark">THÊM VÀO GIỎ HÀNG</button>
+                <button id="btnAddNew"class="btn btn-dark" >"THÊM VÀO GIỎ HÀNG</button>
 
                 <p><b><%=result.description%></b></p>
                
               
             </div>
 
-        
+        </form>
     </div>
 
 
@@ -131,6 +137,7 @@
     var cost = parseInt(document.getElementById("cost").textContent);
     // thiết lập sự kiện cho nút + -
     $("#btnChangeAmountMinus").click(()=>{
+        var cost2 = parseInt(document.getElementById("cost").textContent);
         let amount =parseInt(document.getElementById("amount").value);
         console.log(amount);
         if(amount<=1){
@@ -141,6 +148,9 @@
             amount = amount-1;
             console.log(amount);
             document.getElementById("amount").value=amount
+            let newCost = cost2-cost;
+            $("#cost").html(newCost);
+             $("#price").val(newCost)
         }
     })
     var cost = parseInt(document.getElementById("cost").textContent);
@@ -153,43 +163,32 @@
         document.getElementById("amount").value=amount
         let newCost = cost*amount;
          $("#cost").html(newCost);
+         $("#price").val(newCost)
 
     })
 
-///// thêm cái chức năng khi bấm chọn màu nếu chọn trên 2 màu thì tăng số lượng lên-------------------cái này sai nhé làm lại
-/*$("#checkbox").click(()=>{
-    var check1= document.getElementById("check1")
-    var check2= document.getElementById("check2")
-    var check3= document.getElementById("check3")
-   if( check1.checked==true){
-    let amount =parseInt(document.getElementById("amount").value);
-    amount = amount+1;
-    document.getElementById("amount").value=amount
-   }
-   else if(check2.checked==true){
-    let amount =parseInt(document.getElementById("amount").value);
-    amount = amount+1;
-    document.getElementById("amount").value=amount
-   }
-   else if(check3.checked==true){
-    let amount =parseInt(document.getElementById("amount").value);
-    amount = amount+1;
-    document.getElementById("amount").value=amount
-   }
-   else if(check1.checked==false||check2.checked==false||check3.checked==false){
-    let amount =parseInt(document.getElementById("amount").value);
-    amount = amount-1;
-    document.getElementById("amount").value=amount
-   }
-  /* else if(('#check1').prop("checked",true) &&$('#check2').prop("checked",true)||('#check1').prop("checked",true) && $('#check3').prop("checked",true)||('#check2').prop("checked",true) && $('#check3').prop("checked",true) )
-   {
-    amount = amount+2;
-}
-})*/
-   
-   
+    // lấy giá trị trong radio đưa vào input
+   $(".color").click(()=>{
+    var radios = document.getElementsByName('color');
+    for (var i = 0, length = radios.length; i < length; i++) {
+    if (radios[i].checked) {
+        $("#colorInput").val(radios[i].value)
 
+        break;
+    }
+    } 
+   })
 
+  
+   $("#btnSize").click(()=>{
+      var textSize= document.getElementById('btnSize').textContent;
+       console.log(textSize);
+        document.getElementById('size').value=textSize
+
+   })
+   
+       
+   
 
     $("#btnAddNew").mouseover(()=>{
         $("#btnAddNew").css({"background-color":"white","border-color":"black","color":"black"})
