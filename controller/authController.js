@@ -1996,31 +1996,60 @@ exports.InsertCart= (req,res)=>{
 }
 
 exports.payment= (req,res)=>{
-    id= req.params.id
+    var id=req.params.id
+    var idFromProduct= req.params.idFromProduct
     var color= req.params.color;
     var size = req.params.size;
-   /* cartAndHistory.findOneAndUpdate({idFromProduct: id},{check:'true'},{upsert:true},(err,doc)=>{
+    var amount = req.params.amount
+    cartAndHistory.findOneAndUpdate({_id: id},{check:'true'},{upsert:true},(err,doc)=>{
         if (err) 
             res.send(500, { error: err }); 
-        else res.redirect('/cart')
-    })*/
-    console.log(id);
-    console.log("color",color);
-    product.findOne({_id:id},(err,doc)=>{
+        else 
+        {console.log("update success");
+        //res.redirect('/cart')
+    }
+    })
+   // console.log(id);
+   // console.log("color",color);
+
+    product.findOne({_id:idFromProduct},(err,doc)=>{
         if (err) 
         res.send(500, { error: err }); 
         else {
+            /*
+            lấy số lượng trong properties chạy vòng lặp tìm ra màu tương ứng 
+            lấy được vị trí của màu tiếp tục chạy vòng lặp dựa vào số lượng của classify ứng với màu đã tìm 
+            cho chạy classsify nếu gặp size trùng thì lấy gái trị số lượng cần thay đổi
+            */
             var length=doc.properties.length
             for (var i =0; i<length;i++){
-                //console.log(doc.properties[i].classify);
+                console.log(doc.properties[i].classify);
                 if(doc.properties[i].color===color ){
-                   console.log( doc.properties[i].classify[i].amount)
+                    //console.log(doc.properties[i].classify[i].size);
+                    for(var j=0; j<doc.properties[i].classify.length;j++){
+                        if(doc.properties[i].classify[j].size===size ){
+                             console.log(doc.properties[i].classify[j].size);
+                            var idOfClassify=doc.properties[i].classify[j]._id;
+                            var amountbefore= doc.properties[i].classify[j].amount
+                            console.log("idOfClassify",idOfClassify);
+                            console.log("amountbefore",amountbefore);
+                         
+                            var amountAfter= Number(amountbefore) - Number(amount)
+                            console.log(amountAfter);
+                            product.findByIdAndUpdate(idOfClassify,{amount:amountAfter},(err,doc)=>{
+                                if (err) 
+                                   console.log(err);
+                                else console.log("update thanh coong");
+                            })
+                        }
+                    }
                 }
             }
 
 
         }
     })
+
 
       
     

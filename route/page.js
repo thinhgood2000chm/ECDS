@@ -91,7 +91,7 @@ router.get("/detail/:id",(req,res)=>{
 
     
 })
-router.get('/payment/:id/:color/:size',authController.payment)
+router.get('/payment/:id/:idFromProduct/:color/:size/:amount',authController.payment)
 //router.get("/payment",(req,res)=>{
 
 module.exports=router;

@@ -34,12 +34,12 @@
             <tr>
                 <td><i id="delete" class="fa fa-trash-o" style="font-size:24px"></i></td>
               <td><img src="<%=data.image%>" alt="" width="100px" height="100px"></td>
-              <td><%=data.name%> <input type="hidden" name="colortemp"value="<%=data.color%>"> </td>
+              <td><%=data.name%> </td>
               <td><%=data.amount%></td>
               <td><%=data.color%></td>
               <td><%=data.price%></td>
               <td><%=data.size%></td>
-              <td><button  class="btn btn-success" name="pay" id="pay"><a href="/payment/<%=data.idFromProduct%>/<%=data.color%>/<%=data.size%>"> thanh toán</a></button></td>
+              <td><button  class="btn btn-success" name="pay" id="pay"><a href="/payment/<%=data._id%>/<%=data.idFromProduct%>/<%=data.color%>/<%=data.size%>/<%=data.amount%>"> thanh toán</a></button></td>
         
             </tr>
             <%})%>
