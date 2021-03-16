@@ -68,9 +68,14 @@
                     <div id="createRadioColorParent">
                         <div id="createRadioColor">
                         <input type="hidden" id ="lengthPeroperties" name = "colorInput" value="">
-                            <%result.properties.forEach(prop=>{%>
+                            <%result.properties.forEach(prop=>{ %>
+                             
+                                <div>
                                 <input type="radio" class="color" name="color" value="<%=prop.color%>">
                         <label for="male"><%=prop.color%></label><br>
+                     
+                                </div>
+                          
                            <% })%>
                     </div>
                     </div>
@@ -83,11 +88,11 @@
 
             
                 </div>
-                <div class="colmd-3">
+                <div class="colmd-3" id="btnSizeParent">
                     <% result.properties[0].classify.forEach(c=>{%>
-                        <div class="btn btn-light" id= "btnSize" name="btnSize" value="<%=c.size%>"><%=c.size%></div> 
+                        <button type = "button" class="btn btn-light btnSize"  name="btnSize" value="<%=c.size%>"><%=c.size%></button> 
                     <%})%>
-                <input type="hidden" name ="size"id ="size" value ="" >
+                <input type="text" name ="size"id ="size" value ="" >
 
                 </div>  
                 </div>
@@ -180,10 +185,20 @@
    })
 
   
-   $("#btnSize").click(()=>{
-      var textSize= document.getElementById('btnSize').textContent;
-       console.log(textSize);
-        document.getElementById('size').value=textSize
+   $(".btnSize").click(()=>{
+       parentBtnSize= document.getElementById("btnSizeParent")
+      var textSize= parentBtnSize.getElementsByClassName('btnSize');
+      if(textSize.length>0){
+        console.log(textSize[0].value);
+        console.log(textSize[1].value);
+        console.log(textSize[2].value);
+        console.log(textSize[3].value);
+      }
+      else {
+          console.log("looxi");
+      }
+      
+        //document.getElementById('size').value=textSize
 
    })
    

@@ -1039,7 +1039,6 @@ else
 exports.updateProduct=(req,res)=>{
        //let sp = req.body;
 
-
     var img = req.file;
     console.log(img);
      image= `public/upload/${img.originalname}`
@@ -1997,20 +1996,34 @@ exports.InsertCart= (req,res)=>{
 }
 
 exports.payment= (req,res)=>{
-    var {id,checkBoxchecked}=req.body
-    if(checkBoxchecked==="true"){
-        cartAndHistory.findByIdAndUpdate(id,{check:checkBoxchecked})
-        .then(()=>
-        {
-            res.json({
-                message:'capj nhaatj thanh cong'
-            })
-        
+    id= req.params.id
+    var color= req.params.color;
+    var size = req.params.size;
+   /* cartAndHistory.findOneAndUpdate({idFromProduct: id},{check:'true'},{upsert:true},(err,doc)=>{
+        if (err) 
+            res.send(500, { error: err }); 
+        else res.redirect('/cart')
+    })*/
+    console.log(id);
+    console.log("color",color);
+    product.findOne({_id:id},(err,doc)=>{
+        if (err) 
+        res.send(500, { error: err }); 
+        else {
+            var length=doc.properties.length
+            for (var i =0; i<length;i++){
+                //console.log(doc.properties[i].classify);
+                if(doc.properties[i].color===color ){
+                   console.log( doc.properties[i].classify[i].amount)
+                }
             }
-        )
-        .catch(error =>res.json({
-            message:'lỗi không cập nhật thành công'
-        }))
-    }
+
+
+        }
+    })
+
+      
+    
+
 
 }

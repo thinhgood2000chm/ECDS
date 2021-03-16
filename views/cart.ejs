@@ -23,8 +23,9 @@
               <th>số lượng </th>
               <th>màu sắc</th>
               <th>giá</th>
+              <th>kích cỡ</th>
               <th></th>
-              <th></th>
+    
             </tr>
           </thead>
           <tbody>
@@ -33,12 +34,13 @@
             <tr>
                 <td><i id="delete" class="fa fa-trash-o" style="font-size:24px"></i></td>
               <td><img src="<%=data.image%>" alt="" width="100px" height="100px"></td>
-              <td><%=data.name%> </td>
+              <td><%=data.name%> <input type="hidden" name="colortemp"value="<%=data.color%>"> </td>
               <td><%=data.amount%></td>
               <td><%=data.color%></td>
               <td><%=data.price%></td>
-              <td><input type="checkbox" name="checkbox" id="checkbox"></td>
-              <td><input type="hidden" value="" id="checkBoxchecked" name = checkBoxchecked></td>
+              <td><%=data.size%></td>
+              <td><button  class="btn btn-success" name="pay" id="pay"><a href="/payment/<%=data.idFromProduct%>/<%=data.color%>/<%=data.size%>"> thanh toán</a></button></td>
+        
             </tr>
             <%})%>
     
@@ -69,14 +71,14 @@ $("#btnApply").mouseover(()=>{
 $("#btnApply").mouseout(()=>{
     $("#btnApply").css({"background-color":"#1a1a1a","border-color":"black","color":"white"})
 })
-$("#checkbox").click(()=>{
+/*$("#checkbox").click(()=>{
     if($("#checkbox").prop("checked") == true){
         console.log("đã vào đây");
         //$("#checkBoxchecked").html("true")
-        document.getElementById("checkBoxchecked").value="true"
+        document.getElementsByName("checkBoxchecked").value="true"
     }
     else   $("#checkBoxchecked").html("false")
-})
+})*/
 
 
 
