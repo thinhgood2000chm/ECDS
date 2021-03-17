@@ -7,6 +7,7 @@ const jwt =  require("jsonwebtoken");
 const upload = require("../middleWare/upload");
 const product = require("../models/product")
 const cartAndHistory= require('../models/userCartAndHistory')
+const count = require('../models/countData')
 const fs = require('fs');
 const session = require("express-session");
 exports.register = (req,res, next)=>{
@@ -41,6 +42,10 @@ exports.register = (req,res, next)=>{
 
 exports.login=(req,res,next)=>{
     var{email , password}= req.body;
+    count.findOne({_id:"605242d840e2ecb346533579"},(err,doc)=>{
+        console.log("ddax tim thay");
+    })
+  
 
     User.findOne({email:email})
     .then(user=>{
@@ -1998,6 +2003,7 @@ exports.InsertCart= (req,res)=>{
 exports.payment= (req,res)=>{
     var id=req.params.id
     var idFromProduct= req.params.idFromProduct
+    console.log(idFromProduct);
     var color= req.params.color;
     var size = req.params.size;
     var amount = req.params.amount
@@ -2006,7 +2012,6 @@ exports.payment= (req,res)=>{
             res.send(500, { error: err }); 
         else 
         {console.log("update success");
-        //res.redirect('/cart')
     }
     })
    // console.log(id);
@@ -2022,8 +2027,11 @@ exports.payment= (req,res)=>{
             cho chạy classsify nếu gặp size trùng thì lấy gái trị số lượng cần thay đổi
             */
             var length=doc.properties.length
+            //console.log(length);
             for (var i =0; i<length;i++){
                 console.log(doc.properties[i].classify);
+                //console.log("doc.properties[i]._id",doc.properties[i]._id);
+                idOfProperties= doc.properties[i]._id;
                 if(doc.properties[i].color===color ){
                     //console.log(doc.properties[i].classify[i].size);
                     for(var j=0; j<doc.properties[i].classify.length;j++){
@@ -2036,23 +2044,43 @@ exports.payment= (req,res)=>{
                          
                             var amountAfter= Number(amountbefore) - Number(amount)
                             console.log(amountAfter);
-                            product.findByIdAndUpdate(idOfClassify,{amount:amountAfter},(err,doc)=>{
-                                if (err) 
-                                   console.log(err);
-                                else console.log("update thanh coong");
-                            })
+
+                            //update dữ liệu trong bảng product sau khi mua hàng => số lượng còn trong kho thay đổi 
+                            product.updateOne({"_id":idFromProduct},{$set:{"properties.$[o].classify.$[i].amount":amountAfter}},
+                            {arrayFilters:[{'o._id':idOfProperties},{'i._id':idOfClassify}]})
+                            .then(()=> {
+                                console.log("then thanh cong")
+                                res.render('/cart')
+                                })
+                            .catch(()=>console.log("loi"))
                         }
                     }
                 }
             }
-
-
         }
     })
-
-
-      
-    
-
-
 }
+
+exports.deleteItemFCart=(req,res)=>{
+    if(!req.params.id)
+    res.json({code:1, message:"invalid data"})
+    else 
+        {
+            var id= req.params.id;
+            cartAndHistory.findByIdAndRemove(id)
+            .then(()=>{
+                console.log('xóa thành công');
+                res.redirect('/cart');
+            })
+            .catch(error =>res.json({
+                message:'xóa thất bại'
+        }))
+}
+}
+
+
+
+/* db.getCollection('product').updateOne({"_id":ObjectId("6050df6e2653b815e843b069")},
+{$set:{"properties.$[o].classify.$[i].amount":NumberInt(234)}},
+{arrayFilters:[{'o._id':ObjectId("6050df6e2653b815e843b06a")},{'i._id':ObjectId("6050df6e2653b815e843b06b")}]})
+*/

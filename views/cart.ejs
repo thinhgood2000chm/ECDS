@@ -12,6 +12,9 @@
     <title>cart</title>
 </head>
 <body>
+    <% if(locals.message){%>
+        <input type="text" value="<%=message%>">
+        <%}%>
     <form action="/payment" method="post"> 
     <div class="container">
     <table class="table  table-hover" >
@@ -32,7 +35,7 @@
               <%ucah.forEach(data=>{%>
                 <input type="hidden" id= "id" name="id"value="><%=data._id%>">
             <tr>
-                <td><i id="delete" class="fa fa-trash-o" style="font-size:24px"></i></td>
+                <td><a href="/deleteItemFCart/<%=data._id%>"><i id="delete" class="fa fa-trash-o" style="font-size:24px"></i></a></td>
               <td><img src="<%=data.image%>" alt="" width="100px" height="100px"></td>
               <td><%=data.name%> </td>
               <td><%=data.amount%></td>
@@ -52,7 +55,6 @@
         </div>  
         <div class="col"></div>
       
-        <div class="col"><button class="btn btn-success">THANH TOÁN</button></div>
     </div>
 </div>
 </form>

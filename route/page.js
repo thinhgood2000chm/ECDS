@@ -42,6 +42,14 @@ router.get("/product",(req,res)=>{
     
 })
 
+router.get("/productUser",(req,res)=>{
+    product.exec((err,data)=>{
+        if(err) throw err;
+        res.render('productUser',{product:data})
+    })
+      
+  })
+
 router.get("/cart",authenticate,(req,res)=>{
    if(req.cookies.user){
     if(!req.cookies.user.includes("admin752")){
@@ -92,6 +100,7 @@ router.get("/detail/:id",(req,res)=>{
     
 })
 router.get('/payment/:id/:idFromProduct/:color/:size/:amount',authController.payment)
-//router.get("/payment",(req,res)=>{
+
+router.get("/deleteItemFCart/:id",authController.deleteItemFCart)
 
 module.exports=router;
