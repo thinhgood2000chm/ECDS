@@ -10,5 +10,5 @@ router.post('/delete',authController.deleteProduct)
 router.post('/update',upload.single('image'),authController.updateProduct)
 router.post('/detail', authController.InsertCart)
 router.post('/payment', authController.payment)
-//router.post('/admin', authController.admin)
+
 module.exports=router

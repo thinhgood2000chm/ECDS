@@ -12,9 +12,7 @@
     <title>cart</title>
 </head>
 <body>
-    <% if(locals.message){%>
-        <input type="text" value="<%=message%>">
-        <%}%>
+ 
     <form action="/payment" method="post"> 
     <div class="container">
     <table class="table  table-hover" >
@@ -32,7 +30,7 @@
             </tr>
           </thead>
           <tbody>
-              <%ucah.forEach(data=>{%>
+              <%locals.ucah.forEach(data=>{%>
                 <input type="hidden" id= "id" name="id"value="><%=data._id%>">
             <tr>
                 <td><a href="/deleteItemFCart/<%=data._id%>"><i id="delete" class="fa fa-trash-o" style="font-size:24px"></i></a></td>
@@ -58,6 +56,7 @@
     </div>
 </div>
 </form>
+<input type="hidden" value="<%=locals.message%>" id="notifSuccess">
 <%if(user){%>
     <p><%=user.name%></p>
     <a href="/logout">logout</a>
@@ -65,7 +64,11 @@
     <%}%>
 
 <script>
-
+        var notifSuccess= document.getElementById('notifSuccess').value
+       
+       if(notifSuccess!==''){       
+           alert(notifSuccess)
+       }
 $("#btnApply").mouseover(()=>{
     $("#btnApply").css({"background-color":"white","border-color":"black","color":"black"})
 
@@ -73,14 +76,7 @@ $("#btnApply").mouseover(()=>{
 $("#btnApply").mouseout(()=>{
     $("#btnApply").css({"background-color":"#1a1a1a","border-color":"black","color":"white"})
 })
-/*$("#checkbox").click(()=>{
-    if($("#checkbox").prop("checked") == true){
-        console.log("đã vào đây");
-        //$("#checkBoxchecked").html("true")
-        document.getElementsByName("checkBoxchecked").value="true"
-    }
-    else   $("#checkBoxchecked").html("false")
-})*/
+
 
 
 

@@ -7,9 +7,10 @@ const jwt =  require("jsonwebtoken");
 const upload = require("../middleWare/upload");
 const product = require("../models/product")
 const cartAndHistory= require('../models/userCartAndHistory')
-const countData = require('../models/countData')
 const fs = require('fs');
 const session = require("express-session");
+
+
 exports.register = (req,res, next)=>{
     var {password, name, email, phone, confirmPassword} = req.body; 
     bcrypt.hash(password, 10 , (err, hashedPass)=>{
@@ -2047,7 +2048,8 @@ exports.payment= (req,res)=>{
                             product.updateOne({"_id":idFromProduct},{$set:{"properties.$[o].classify.$[i].amount":amountAfter}},
                             {arrayFilters:[{'o._id':idOfProperties},{'i._id':idOfClassify}]})
                             .then(()=> {
-                                console.log("then thanh cong")
+                                console.log("thêm thanh cong")
+                                //res.render('cart',{ucah:"", message:"thanh toán thành công"})
                                 res.redirect('/cart')
                                 })
                             .catch(()=>console.log("loi"))
@@ -2076,38 +2078,3 @@ exports.deleteItemFCart=(req,res)=>{
 }
 }
 
-/*exports.admin=(req,res)=>{
-    countData.findOne({_id:"6052c92740e2ecb346533a29"},(err,doc)=>{
-       // console.log(doc.size);
-        var sizeOfProduct =doc.size 
-      
-            product.find({},(err, doc)=>{
-                for(var i=0;i<sizeOfProduct;i++){
-                    console.log(doc[i].name);
-                    var namePCheck=doc[i].name
-                    var lengthOfproperties=doc[i].properties.length
-                    //console.log(lengthOfproperties);
-                    for(var j=0;j<lengthOfproperties;j++){
-                        console.log(doc[i].properties[j].color);
-                        var colorCheck= doc[i].properties[j].color
-                        for(var z=0; z<doc[i].properties[j].classify.length;z++){
-                            console.log(doc[i].properties[j].classify[z].amount);
-                            amountCheck=doc[i].properties[j].classify[z].amount;
-                            if(amountCheck<=10){
-                                console.log("sản phẩm "+ namePCheck+" màu "+colorCheck+" chỉ còn lại "+amountCheck+" vui lòng bổ xung thêm" );
-                            }
-                        }
-                    }
-                }
-            })
-        
-      
-    })
-    
-  
-}*/
-
-/* db.getCollection('product').updateOne({"_id":ObjectId("6050df6e2653b815e843b069")},
-{$set:{"properties.$[o].classify.$[i].amount":NumberInt(234)}},
-{arrayFilters:[{'o._id':ObjectId("6050df6e2653b815e843b06a")},{'i._id':ObjectId("6050df6e2653b815e843b06b")}]})
-*/

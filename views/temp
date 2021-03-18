@@ -52,3 +52,19 @@ label.star:before {
   content: '\f006';
   font-family: FontAwesome;
 }
+
+<% for( var i =0;i<arr.length;i++){%>
+        <input type="text" value="<%=locals.arr[i]%>" name="notification" id="notification" >
+    <%}%>
+   /*var notification= document.getElementsByName('notification')
+        var length= <%=arr.length%>
+        if(notification!==''){
+        for(var i=0; i<length;i++){
+           
+            alert(notification[i].value)
+            }
+        }*/
+
+        chưa chia router cho những file của admin và những file của user
+        chưa cps các đk đăng nhập đk và nút bấm thêm sản phẩm
+        chưa tổng kết, giảm giá , yêu cầu của khách hàng
