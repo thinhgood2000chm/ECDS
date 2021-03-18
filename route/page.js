@@ -7,7 +7,7 @@ var product = productModule.find({})
 //const Products = require("../models/product")
 const userCartAndHistory = require('../models/userCartAndHistory')
 var ucah= userCartAndHistory.find({})
-
+const countData = require('../models/countData')
 
 
 router.get("/register",(req,res)=>{
@@ -26,10 +26,43 @@ router.get("/login",(req,res)=>{
     else
     res.render("login")
 })
+//thêm await vào 
 router.get('/admin',authenticate, (req,res)=>{     
     if(req.cookies.user){
-        if(req.cookies.user.includes("admin752"))
-            res.render("admin")
+        if(req.cookies.user.includes("admin752")){
+            countData.findOne({_id:"6052c92740e2ecb346533a29"},(err,doc)=>{
+                // console.log(doc.size);
+                 var sizeOfProduct =doc.size 
+               
+                     product.find({},(err, doc)=>{
+                         for(var i=0;i<sizeOfProduct;i++){
+                             console.log(doc[i].name);
+                             var namePCheck=doc[i].name
+                             var lengthOfproperties=doc[i].properties.length
+                             //console.log(lengthOfproperties);
+                             for(var j=0;j<lengthOfproperties;j++){
+                                 console.log(doc[i].properties[j].color);
+                                 var colorCheck= doc[i].properties[j].color
+                                 for(var z=0; z<doc[i].properties[j].classify.length;z++){
+                                     console.log(doc[i].properties[j].classify[z].amount);
+                                     amountCheck=doc[i].properties[j].classify[z].amount;
+                                     if(amountCheck<=10){
+                                         //console.log("sản phẩm "+ namePCheck+" màu "+colorCheck+" chỉ còn lại "+amountCheck+" vui lòng bổ xung thêm" );
+                                        res.render("admin",{notif:"sản phẩm "+ namePCheck+" màu "+colorCheck+" chỉ còn lại "+amountCheck+" vui lòng bổ xung thêm"})
+                                   }
+                                   else      res.render("admin",{notif:""})
+                                 }
+                             }
+                         }
+                     })
+                 
+               
+             })
+
+        
+
+        }
+           
     }
     else res.redirect('/cart')
     

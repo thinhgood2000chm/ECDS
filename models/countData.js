@@ -7,5 +7,5 @@ const countSchema = new Schema({
   
 },{timestamps:true})
 
-const count = mongoose.model("count", countSchema, "count")
-module.exports= count;
+const countData = mongoose.model("countData", countSchema, "countData")
+module.exports= countData;

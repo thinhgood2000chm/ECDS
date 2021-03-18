@@ -7,7 +7,7 @@ const jwt =  require("jsonwebtoken");
 const upload = require("../middleWare/upload");
 const product = require("../models/product")
 const cartAndHistory= require('../models/userCartAndHistory')
-const count = require('../models/countData')
+const countData = require('../models/countData')
 const fs = require('fs');
 const session = require("express-session");
 exports.register = (req,res, next)=>{
@@ -42,9 +42,7 @@ exports.register = (req,res, next)=>{
 
 exports.login=(req,res,next)=>{
     var{email , password}= req.body;
-    count.findOne({_id:"605242d840e2ecb346533579"},(err,doc)=>{
-        console.log("ddax tim thay");
-    })
+   
   
 
     User.findOne({email:email})
@@ -2050,7 +2048,7 @@ exports.payment= (req,res)=>{
                             {arrayFilters:[{'o._id':idOfProperties},{'i._id':idOfClassify}]})
                             .then(()=> {
                                 console.log("then thanh cong")
-                                res.render('/cart')
+                                res.redirect('/cart')
                                 })
                             .catch(()=>console.log("loi"))
                         }
@@ -2078,7 +2076,36 @@ exports.deleteItemFCart=(req,res)=>{
 }
 }
 
-
+/*exports.admin=(req,res)=>{
+    countData.findOne({_id:"6052c92740e2ecb346533a29"},(err,doc)=>{
+       // console.log(doc.size);
+        var sizeOfProduct =doc.size 
+      
+            product.find({},(err, doc)=>{
+                for(var i=0;i<sizeOfProduct;i++){
+                    console.log(doc[i].name);
+                    var namePCheck=doc[i].name
+                    var lengthOfproperties=doc[i].properties.length
+                    //console.log(lengthOfproperties);
+                    for(var j=0;j<lengthOfproperties;j++){
+                        console.log(doc[i].properties[j].color);
+                        var colorCheck= doc[i].properties[j].color
+                        for(var z=0; z<doc[i].properties[j].classify.length;z++){
+                            console.log(doc[i].properties[j].classify[z].amount);
+                            amountCheck=doc[i].properties[j].classify[z].amount;
+                            if(amountCheck<=10){
+                                console.log("sản phẩm "+ namePCheck+" màu "+colorCheck+" chỉ còn lại "+amountCheck+" vui lòng bổ xung thêm" );
+                            }
+                        }
+                    }
+                }
+            })
+        
+      
+    })
+    
+  
+}*/
 
 /* db.getCollection('product').updateOne({"_id":ObjectId("6050df6e2653b815e843b069")},
 {$set:{"properties.$[o].classify.$[i].amount":NumberInt(234)}},
