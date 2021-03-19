@@ -64,8 +64,6 @@
     <%}%>
 
 <script>
-    // chỉnh lại chỗ này vì nó sẽ hiện thông báo mỗi khi load lại page
-    
         var notifSuccess= document.getElementById('notifSuccess').value
        
        if(notifSuccess!==''){       
@@ -74,6 +72,15 @@
        }
        notifSuccess=''
        
+
+       // thiết lập lại đường dẫn vì bên authController pay ko gửi lại trang cart mà render lại nội dung trang cart
+       // ==> giá trị trên url pay/.../.../  vẫn còn nên chỉ cần refesh thì nó sẽ mua thêm 1 lần nữa 
+       //==> thay đổi đường dẫn để nó quay lại cart 
+       var pathame = window.location.pathname
+       console.log(pathame);
+       if(pathame!=='/cart'){
+        location.replace('http://localhost:3000/cart')
+       }
 $("#btnApply").mouseover(()=>{
     $("#btnApply").css({"background-color":"white","border-color":"black","color":"black"})
 

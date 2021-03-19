@@ -146,26 +146,32 @@ router.get("/detail/:id",(req,res)=>{
 })
 
 router.get('/user/history', (req,res)=>{
+    var dataHisttoryUser =[]
     userCartAndHistory.find({check: "true"},(err,result)=>{
         for(var i=0; i< result.length;i++){
             if(result[i].email===req.cookies.user){
                 console.log("trùng khớp");
-                return res.render('historyUser',{result})
+                dataHisttoryUser.push(result[i])
+                console.log('dataHisttoryUser',dataHisttoryUser);
+               
             }
            
         }
-       // return res.render('historyUser',{result=''})
-  
-        console.log(result.length);
-        console.log(req.cookies.user);
+        res.render('historyUser',{results:dataHisttoryUser})
+     
         
     })
    
    
 })
 router.get('/total',(req,res)=>{
+    var total=0
     userCartAndHistory.find({check: "true"},(err,results)=>{
-    res.render('total',{results})
+        for(var i =0;i<results.length;i++){
+            total= total+results[i].price
+        }
+        console.log('total',total);
+    res.render('total',{results, total})
     })
 })
 router.get('/payment/:id/:idFromProduct/:color/:size/:amount',authController.payment)

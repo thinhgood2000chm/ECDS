@@ -9,7 +9,7 @@ const product = require("../models/product")
 const cartAndHistory= require('../models/userCartAndHistory')
 const fs = require('fs');
 const userCartAndHistory = require('../models/userCartAndHistory')
-var ucah= userCartAndHistory.find({})
+//var ucah= userCartAndHistory.find({})
 const session = require("express-session");
 
 
@@ -2027,7 +2027,9 @@ exports.payment= (req,res)=>{
             lấy được vị trí của màu tiếp tục chạy vòng lặp dựa vào số lượng của classify ứng với màu đã tìm 
             cho chạy classsify nếu gặp size trùng thì lấy gái trị số lượng cần thay đổi
             */
-            var length=doc.properties.length
+
+            var length=doc.properties.length 
+            var dataOfUser=[]
             //console.log(length);
             for (var i =0; i<length;i++){
                 console.log(doc.properties[i].classify);
@@ -2051,10 +2053,21 @@ exports.payment= (req,res)=>{
                             {arrayFilters:[{'o._id':idOfProperties},{'i._id':idOfClassify}]})
                             .then(()=> {
                                 console.log("cập nhật thanh cong")
-                                //res.render('cart',{ucah:"", message:"thanh toán thành công"})
-                                ucah.exec((err,data)=>{
-                                    if(err) throw err;
-                                    res.render('cart',{ucah:data, message:"mua thành công"})
+                               var message="thanh thanh toán thành công"
+                                cartAndHistory.find({},(err,data)=>{
+                                    for(var i=0; i<data.length;i++){
+                                        console.log(data[i].email);
+                                        console.log(req.cookies.user);
+                                        if(data[i].email===req.cookies.user){
+                                            dataOfUser.push(data[i])
+                                            console.log('dataOfUser',dataOfUser);
+                                            //console.log('data',data);
+                                           // return res.render('cart',{ucah:data, message:""})
+                                        }
+                                    }
+                                  
+                                    res.render('cart',{ucah:dataOfUser, message})
+                                    //res.redirect('/cart')
                                 })
                                 })
                             .catch(()=>console.log("loi"))
@@ -2082,4 +2095,6 @@ exports.deleteItemFCart=(req,res)=>{
         }))
 }
 }
+
+
 

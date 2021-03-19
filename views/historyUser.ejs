@@ -35,8 +35,7 @@
               </thead>
               <tbody>
                   
-                <% if(result){
-                result.forEach(data=>{%>
+                <%results.forEach(data=>{%>
                     <input type="hidden" id= "id" name="id"value="><%=data._id%>">
                 <tr>
                   <td><img src="<%=data.image%>" alt="" width="100px" height="100px"></td>
@@ -48,7 +47,7 @@
                   <td><button  class="btn btn-success" name="pay" id="pay"><a href="/payment/<%=data._id%>/<%=data.idFromProduct%>/<%=data.color%>/<%=data.size%>/<%=data.amount%>"> đặt hàng lại</a></button></td>
             
                 </tr>
-                <%})}%>
+                <%})%>
             </tbody>
             </table>
 </body>
