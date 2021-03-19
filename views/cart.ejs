@@ -64,11 +64,16 @@
     <%}%>
 
 <script>
+    // chỉnh lại chỗ này vì nó sẽ hiện thông báo mỗi khi load lại page
+    
         var notifSuccess= document.getElementById('notifSuccess').value
        
        if(notifSuccess!==''){       
            alert(notifSuccess)
+          
        }
+       notifSuccess=''
+       
 $("#btnApply").mouseover(()=>{
     $("#btnApply").css({"background-color":"white","border-color":"black","color":"black"})
 

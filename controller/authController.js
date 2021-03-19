@@ -8,6 +8,8 @@ const upload = require("../middleWare/upload");
 const product = require("../models/product")
 const cartAndHistory= require('../models/userCartAndHistory')
 const fs = require('fs');
+const userCartAndHistory = require('../models/userCartAndHistory')
+var ucah= userCartAndHistory.find({})
 const session = require("express-session");
 
 
@@ -2048,9 +2050,12 @@ exports.payment= (req,res)=>{
                             product.updateOne({"_id":idFromProduct},{$set:{"properties.$[o].classify.$[i].amount":amountAfter}},
                             {arrayFilters:[{'o._id':idOfProperties},{'i._id':idOfClassify}]})
                             .then(()=> {
-                                console.log("thêm thanh cong")
+                                console.log("cập nhật thanh cong")
                                 //res.render('cart',{ucah:"", message:"thanh toán thành công"})
-                                res.redirect('/cart')
+                                ucah.exec((err,data)=>{
+                                    if(err) throw err;
+                                    res.render('cart',{ucah:data, message:"mua thành công"})
+                                })
                                 })
                             .catch(()=>console.log("loi"))
                         }

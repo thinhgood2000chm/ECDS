@@ -83,13 +83,29 @@ router.get("/productUser",(req,res)=>{
   })
 
 router.get("/cart",authenticate,(req,res)=>{
+    var dataOfUser= []
    if(req.cookies.user){
     if(!req.cookies.user.includes("admin752")){
-        ucah.exec((err,data)=>{
+        /*ucah.exec((err,data)=>{
+            
             if(err) throw err;
             res.render('cart',{ucah:data, message:""})
+        })*/
+        userCartAndHistory.find({},(err,data)=>{
+            for(var i=0; i<data.length;i++){
+                console.log(data[i].email);
+                console.log(req.cookies.user);
+                if(data[i].email===req.cookies.user){
+                    dataOfUser.push(data[i])
+                    console.log('dataOfUser',dataOfUser);
+                    //console.log('data',data);
+                   // return res.render('cart',{ucah:data, message:""})
+                }
+            }
+            res.render('cart',{ucah:dataOfUser, message:""})
+            //res.render('cart',{ucah=""})
         })
-     
+       
       }
       else res.redirect('/admin')
     }
@@ -134,15 +150,23 @@ router.get('/user/history', (req,res)=>{
         for(var i=0; i< result.length;i++){
             if(result[i].email===req.cookies.user){
                 console.log("trùng khớp");
-                res.render('historyUser',{result})
+                return res.render('historyUser',{result})
             }
+           
         }
+       // return res.render('historyUser',{result=''})
   
         console.log(result.length);
         console.log(req.cookies.user);
         
     })
    
+   
+})
+router.get('/total',(req,res)=>{
+    userCartAndHistory.find({check: "true"},(err,results)=>{
+    res.render('total',{results})
+    })
 })
 router.get('/payment/:id/:idFromProduct/:color/:size/:amount',authController.payment)
 
