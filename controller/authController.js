@@ -11,6 +11,7 @@ const fs = require('fs');
 const userCartAndHistory = require('../models/userCartAndHistory')
 //var ucah= userCartAndHistory.find({})
 const session = require("express-session");
+const total = require('../models/total')
 
 
 exports.register = (req,res, next)=>{
@@ -2001,6 +2002,7 @@ exports.InsertCart= (req,res)=>{
     }
 }
 
+// thieets lập thanh toán, lưu giá trị bảng total, thay đổi giá trị bảng cartandhistory, 
 exports.payment= (req,res)=>{
     var id=req.params.id
     var idFromProduct= req.params.idFromProduct
@@ -2008,15 +2010,29 @@ exports.payment= (req,res)=>{
     var color= req.params.color;
     var size = req.params.size;
     var amount = req.params.amount
+    // cập nhật trạng thái từ false sang true ( từ chwua mua -> đã mua )
     cartAndHistory.findOneAndUpdate({_id: id},{check:'true'},{upsert:true},(err,doc)=>{
         if (err) 
             res.send(500, { error: err }); 
         else 
         {console.log("update success");
+            // insert data vào bảng total
+        var d = new Date()
+        let totals = new total({
+            year:d.getFullYear(),
+            months:String(Number(d.getMonth())+1),
+            totalPrice: doc.price
+        })
+        totals.save()
+        .then(()=>{
+            console.log('them total thành công');
+        }
+        )
+        .catch(error =>res.json({
+            message:'loi ko them duoc '
+        }))
     }
     })
-   // console.log(id);
-   // console.log("color",color);
 
     product.findOne({_id:idFromProduct},(err,doc)=>{
         if (err) 
@@ -2032,7 +2048,7 @@ exports.payment= (req,res)=>{
             var dataOfUser=[]
             //console.log(length);
             for (var i =0; i<length;i++){
-                console.log(doc.properties[i].classify);
+                console.log('doc.properties[i].classify',doc.properties[i].classify);
                 //console.log("doc.properties[i]._id",doc.properties[i]._id);
                 idOfProperties= doc.properties[i]._id;
                 if(doc.properties[i].color===color ){
@@ -2056,13 +2072,11 @@ exports.payment= (req,res)=>{
                                var message="thanh thanh toán thành công"
                                 cartAndHistory.find({},(err,data)=>{
                                     for(var i=0; i<data.length;i++){
-                                        console.log(data[i].email);
-                                        console.log(req.cookies.user);
+                                        //console.log(data[i].email);
+                                        //console.log(req.cookies.user);
                                         if(data[i].email===req.cookies.user){
                                             dataOfUser.push(data[i])
                                             console.log('dataOfUser',dataOfUser);
-                                            //console.log('data',data);
-                                           // return res.render('cart',{ucah:data, message:""})
                                         }
                                     }
                                   
@@ -2096,5 +2110,31 @@ exports.deleteItemFCart=(req,res)=>{
 }
 }
 
+// tính tổng tiền theo tứng tháng
+exports.totalPrice=(req,res)=>{
+    var{ year, month}= req.body
+    console.log('year',year);
+    var totals = 0;
+    userCartAndHistory.find({check: "true"},(err,results)=>{
+        total.find({year:year},(err,doc)=>{
+            if(err){
+                res.json({error: err})
+            }
+            else{
+                for(var i =0; i< doc.length;i++){
+                    if(doc[i].year === year && doc[i].months===month){
+                            totals =totals+doc[i].totalPrice
+                    }
+                    else {
+                        res.render('total',{results,totals})
+                    }
+                    
+                }
+                res.render('total',{results,totals});
+    
+            }
+        })
+    })
+}
 
 

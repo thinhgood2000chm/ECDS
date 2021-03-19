@@ -17,6 +17,41 @@
         <button class="btn btn-info">tìm kiếm</button><input type="text" placeholder="nhập tên thông tin tìm kiếm">
     </div>
     </form>
+    <form action="/totalPrice" method="post">
+        <div>
+        <label for="year">chọn năm:</label>
+        <select id="year" name="year">
+            <option value="2020">2020</option>
+            <option value="2021"selected>2021</option>
+            <option value="2022">2022</option>
+            <option value="2023" >2023</option>
+        </select>
+
+        <label for="month">chọn tháng:</label>
+        <select id="month" name="month">
+            <option value="1">tháng 1</option>
+            <option value="2">tháng 2</option>
+            <option value="3"selected>tháng 3</option>
+            <option value="4" >tháng 4</option>
+            <option value="5">tháng 5</option>
+            <option value="6">tháng 6</option>
+            <option value="7">tháng 7</option>
+            <option value="8">tháng 8</option>
+            <option value="9">tháng 9</option>
+            <option value="10">tháng 10</option>   
+            <option value="11">tháng 11</option>
+            <option value="12">tháng 12</option>
+        </select>
+        <button class="btn btn-info" >xem tổng kết</button>
+        </div>
+    </form>
+    <%if(locals.message){%>
+        
+        <div class="alert alert-danger"><%=locals.message%> </div>
+        <%}else{%>
+     
+    <h3>tổng tiền :<%=locals.totals%></h3>
+    <%}%>
     <div class="container">
         <table class="table  table-hover" >
             <thead>
@@ -52,6 +87,6 @@
               </tbody>
               </table>
 
-              <h3>tổng tiền :<%=total%></h3>
+       
 </body>
 </html>

@@ -5,6 +5,7 @@ const authenticate = require("../middleWare/authenticate")
 const authController = require("../controller/authController");
 const userCartAndHistory = require('../models/userCartAndHistory')
 var ucah= userCartAndHistory.find({})
+const total = require('../models/total')
 
 var product = productModule.find({})
 
@@ -165,13 +166,9 @@ router.get('/user/history', (req,res)=>{
    
 })
 router.get('/total',(req,res)=>{
-    var total=0
+    //var total=0
     userCartAndHistory.find({check: "true"},(err,results)=>{
-        for(var i =0;i<results.length;i++){
-            total= total+results[i].price
-        }
-        console.log('total',total);
-    res.render('total',{results, total})
+         res.render('total',{results})
     })
 })
 router.get('/payment/:id/:idFromProduct/:color/:size/:amount',authController.payment)

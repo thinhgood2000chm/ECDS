@@ -15,6 +15,6 @@ const UserCartAndHistory= new Schema({
     size: String,
     amount: Number
 
-},{timeStamp:true})
+},{timestamps: true})
 const cartAndHistory = mongoose.model('cartAndHistory',UserCartAndHistory,'cartAndHistory')
 module.exports=cartAndHistory
