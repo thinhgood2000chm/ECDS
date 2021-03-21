@@ -7,7 +7,7 @@ const userCartAndHistory = require('../models/userCartAndHistory')
 var ucah= userCartAndHistory.find({})
 const total = require('../models/total')
 
-var product = productModule.find({})
+var product = productModule.find({})// cái này là cách show data ra ( cách 2 ), cách 1 dùng find({}, (er, doc)=>{ code ...}) với doc là mảng chứa các dữ liệu của bảng
 
 router.get("/register",(req,res)=>{
     res.render('register')
@@ -32,17 +32,61 @@ router.get('/admin',authenticate, (req,res)=>{
         if(req.cookies.user.includes("admin752")){
              var d= new Date();
                  // dùng mảng để lưu giá trị thông báo sau đó gửi mảng qua ejs
-                     product.find({},(err, doc)=>{
+                 productModule.find({},(err, doc)=>{
                         console.log(doc.length);
                          for(var i=0;i<doc.length;i++){
-                             console.log(doc[i].name);
-                             console.log('doc[i].timestart.slice(8,10)',String(doc[i].timestart).slice(0,4)); 
+                             //console.log(doc[i].name);
+                             //console.log('doc[i].timestart.slice(8,10)',String(doc[i].timestart).slice(0,4)); 
                              //console.log(d.getDate());
-                             if(Number(String(doc[i].timestart).slice(8,10))===Number(d.getDate()) && 
-                             Number(String(doc[i].timestart).slice(5,7))===(Number(d.getMonth())+1) &&
-                             Number(String(doc[i].timestart).slice(0,4))===Number(d.getFullYear())  ) {
-                                 console.log(' da vao day');
-                             }
+                             if(Number(String(doc[i].timestart).slice(8,10))<=Number(d.getDate()) && 
+                             Number(String(doc[i].timestart).slice(5,7))<=(Number(d.getMonth())+1) &&
+                             Number(String(doc[i].timestart).slice(0,4))===Number(d.getFullYear()) &&
+            
+                              Number(String(doc[i].timeend).slice(5,7))>=(Number(d.getMonth())+1) &&
+                              Number(String(doc[i].timeend).slice(0,4))===Number(d.getFullYear())
+                             &&String(doc[i].checkDiscount)==='false' ) {
+                                 var IdtimeS = doc[i]._id
+                                 console.log("IdtimeS",Number(d.getDate()),Number(d.getMonth())+1,Number(d.getFullYear()));
+                        
+                                 console.log("IdtimeS",IdtimeS);
+                                 productModule.update({_id:IdtimeS},{checkDiscount:"true"})
+                                 .then(()=>{
+                                     console.log("đã cập nhật giảm giá thành công");
+                                     
+                                 })
+                                 .catch(()=>{
+                                     console.log("lỗi");
+                                 })
+                              }
+                             else 
+                               if(Number(String(doc[i].timeend).slice(8,10))<=Number(d.getDate()) && 
+                               Number(String(doc[i].timeend).slice(5,7))===(Number(d.getMonth())+1)  &&
+                               Number(String(doc[i].timeend).slice(0,4))===Number(d.getFullYear()) &&String(doc[i].checkDiscount)==='true'  ) {
+                                var IdtimeE = doc[i]._id
+                                console.log("IdtimeE",Number(d.getDate()),Number(d.getMonth())+1,Number(d.getFullYear()));
+                                productModule.update({_id:IdtimeE},{upsert:true},{checkDiscount:"false"})
+                                .then(()=>{
+                                    console.log("đã cập nhật giảm giá false thành công");
+                                    
+                                })
+                                .catch(()=>{
+                                    console.log("lỗi");
+                                })
+                               } 
+                               else if(Number(String(doc[i].timeend).slice(5,7))<(Number(d.getMonth())+1)  &&
+                               Number(String(doc[i].timeend).slice(0,4))===Number(d.getFullYear()) &&String(doc[i].checkDiscount)==='true'  ) {
+                                var IdtimeE = doc[i]._id
+                                console.log("IdtimeE2",Number(d.getDate()),Number(d.getMonth())+1,Number(d.getFullYear()));
+                                console.log("IdtimeE2",IdtimeE);
+                                productModule.update({_id:IdtimeE},{checkDiscount:"false"})
+                                .then(()=>{
+                                    console.log("đã cập nhật giảm giá false thành công");
+                                    
+                                })
+                                .catch(()=>{
+                                    console.log("lỗi");
+                                })
+                               }
                              var namePCheck=doc[i].name
                              var lengthOfproperties=doc[i].properties.length
                              //console.log(lengthOfproperties);
@@ -56,10 +100,12 @@ router.get('/admin',authenticate, (req,res)=>{
                                          console.log("sản phẩm "+ namePCheck+" màu "+colorCheck+" chỉ còn lại "+amountCheck+" vui lòng bổ xung thêm" );
                                         let temp ="sản phẩm "+ namePCheck+" màu "+colorCheck+" chỉ còn lại "+amountCheck+" vui lòng bổ xung thêm";
                                         arr.push(temp)
-                                   }
-                                 }
-                             }
-                         }
+                                        }
+                                    }
+                                }
+                            
+                  
+                            }
                          // vị trí cuối cùng nếu cho ra ngoài phạm vi này arr sẽ ko có giá trị
                          console.log('arr',arr[0]);
                          res.render('admin',{arr})

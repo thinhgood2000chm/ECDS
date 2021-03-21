@@ -192,7 +192,7 @@ exports.addProduct=(req,res)=>{
                     discount: discount,
                     timestart:timeS,
                     timeend:timeE,
-                    checkDiscount:'true',
+                    checkDiscount:'false',
                     image: image,
                     description: desc,
                     properties:[
@@ -2177,7 +2177,7 @@ exports.InsertCart= (req,res)=>{
     }
 }
 
-// thieets lập thanh toán, lưu giá trị bảng total, thay đổi giá trị bảng cartandhistory, 
+// thieets lập thanh toán, thay đổi giá trị bảng cartandhistory, 
 exports.payment= (req,res)=>{
     var id=req.params.id
     var idFromProduct= req.params.idFromProduct
@@ -2239,7 +2239,6 @@ exports.payment= (req,res)=>{
                                             //console.log('dataOfUser',dataOfUser);
                                         }
                                     }
-                                  
                                     res.render('cart',{ucah:dataOfUser, message})
                                     //res.redirect('/cart')
                                 })
