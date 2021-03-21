@@ -7,8 +7,12 @@ const productSchema = new Schema({
         type: String
     },
     price :Number,
+    discount: Number,
+    timestart:String,
+    timeend:String,
+    checkDiscount:String,
     image :{
-        type: String
+        type: String 
     },
     description :{
         type: String

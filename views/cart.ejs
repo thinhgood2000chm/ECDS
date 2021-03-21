@@ -31,7 +31,7 @@
           </thead>
           <tbody>
               <%locals.ucah.forEach(data=>{%>
-                <input type="hidden" id= "id" name="id"value="><%=data._id%>">
+                <input type="hidden" id= "id" name="id"value="<%=data._id%>">
             <tr>
                 <td><a href="/deleteItemFCart/<%=data._id%>"><i id="delete" class="fa fa-trash-o" style="font-size:24px"></i></a></td>
               <td><img src="<%=data.image%>" alt="" width="100px" height="100px"></td>

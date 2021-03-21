@@ -17,6 +17,51 @@ const { type } = require("os");
 
 exports.register = (req,res, next)=>{
     var {password, name, email, phone, confirmPassword} = req.body; 
+    if(!name){
+        res.render('register',{errMess:'tên không được để trống',name,email,phone})
+    }
+    else  if(!email){
+        res.render('register',{errMess:'email không được để trống',name,email,phone})
+    }
+    else if(email){
+        User.find({},(err,doc)=>{
+            for(var e =0;e<doc.length;e++){
+                if(doc[e].email===email){
+                    res.render('register',{errMess:"email đã tồn tại vui lòng chọn email khác",name,phone})
+                }
+            }
+           
+        })
+    }
+    else if(!phone){
+        res.render('register',{errMess:'số điện thoại không được để trống',name,email,phone})
+    } 
+    else if(phone){
+        User.find({},(err,doc)=>{
+            for(var e =0;e<doc.length;e++){
+                if(doc[e].phone===phone){
+                    res.render('register',{errMess:"số điện thoại đã tồn tại vui lòng chọn sđt khác",name,email})
+                }
+            }
+           
+        })
+    }
+    else if(!password){
+        res.render('register',{errMess:'mật khẩu không được để trống',name,email,phone})
+    } 
+    else if (password.length<6 ){
+        res.render('register',{errMess:"vui long nhap toi thieu 6 kis tu",name,email,phone})
+    }
+    else if(!confirmPassword){
+        res.render('register',{errMess:'vui lòng nhập lại mật khẩu',name,email,phone})
+    } 
+ 
+    else if (password!== confirmPassword){
+        res.render('register',{errMess:"mật khẩu nhập lại không trùng khớp",name,email,phone})
+    }
+    else {
+ 
+    }
     bcrypt.hash(password, 10 , (err, hashedPass)=>{
         if(err){
             res.json({
@@ -48,7 +93,15 @@ exports.register = (req,res, next)=>{
 exports.login=(req,res,next)=>{
     var{email , password}= req.body;
    
-  
+    if(!email){
+      res.render('login',{errMess:'vui lòng nhập email'})
+    }
+    else if (!password){
+    res.render('login',{errMess:"vui long nhap password",email,password})
+    }
+    else if (password.length<6 ){
+        res.render('login',{errMess:"vui long nhap toi thieu 6 kis tu",email,password})
+    }
 
     User.findOne({email:email})
     .then(user=>{
@@ -63,14 +116,7 @@ exports.login=(req,res,next)=>{
                     let token = jwt.sign({id: user._id},'secrectValue',{expiresIn:'1h'})
                     res.cookie('jwt', token)
                     res.cookie('user',user.email)
-                    //req.session.phone
-                    console.log(token);
-                   /* res.json({
-                       message:"đăng nhập thành công",
-                      // token:token // gửi token
-                        token// ghi tắt lịa là thế này vì giống nhau
-
-                    })*/
+           
                     if(user.email.includes("admin752")){
                         res.redirect("/admin")
                     }
@@ -78,18 +124,17 @@ exports.login=(req,res,next)=>{
                 }
                 else {
                     
-                    res.json({
-                    message:"password không trùng khớp"
-                })
-                
-                    //res.redirect("/login")
+                   /* res.json({
+                    message:"password không trùng khớp"*/
+                    res.render('login',{errMess:"mật khẩu không trùng khớp",email,password})
                 }
             })
         }
         else{
-            res.json({
+           /* res.json({
                 message:'người dùng không tồn tại'
-            })
+            })*/
+            res.render('login',{errMess:"email không tồn tại",email,password})
         }
     })
 }
@@ -102,13 +147,6 @@ exports.addProduct=(req,res)=>{
             // console.log(image);
              fs.renameSync(images.path,pathImage)
              var image = pathImage.slice(6)
-             
-        //let sp = req.body;
-    
-
-        //console.log(pathImage);
-  
-
 
     // chuyển từ String qua array
     var inputSize = req.body.inputSize.split(/,| /) // tách chuổi để tạo thành mảng riêng từng phần tử 
@@ -133,13 +171,28 @@ exports.addProduct=(req,res)=>{
 
            // uploadImage
       
-    var {name,desc,price,type} = req.body
+    var {name,desc,price,type,discount, timeS, timeE} = req.body
+    console.log('timeS, timeE',timeS, timeE);
+    if(!type){
+        res.render('addProduct',{errMess:'vui lòng nhập loại sản phẩm'})
+    } else if(!name){
+        res.render('addProduct',{errMess:'vui lòng nhập tên sản phẩm'})
+    }else if(!price){
+        res.render('addProduct',{errMess:'vui lòng nhập giá sản phẩm'})
+    }else if(!desc){
+        res.render('addProduct',{errMess:'vui lòng nhập mô tả sản phẩm'})
+    }
+    else{
         if(countColor==1){
             if(countSize==1){
                 let addProduct = new product({
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
+                    checkDiscount:'true',
                     image: image,
                     description: desc,
                     properties:[
@@ -163,6 +216,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -186,6 +242,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -210,6 +269,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -240,6 +302,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -266,6 +331,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -294,6 +362,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -324,6 +395,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -362,6 +436,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -391,6 +468,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -423,6 +503,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -458,6 +541,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -504,6 +590,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -536,6 +625,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -572,6 +664,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -612,6 +707,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -666,6 +764,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -704,6 +805,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -744,6 +848,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -789,6 +896,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -850,6 +960,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -891,6 +1004,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -935,6 +1051,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -985,6 +1104,9 @@ exports.addProduct=(req,res)=>{
                     type:type,
                     name: name,
                     price: price,
+                    discount: discount,
+                    timestart:timeS,
+                    timeend:timeE,
                     image: image,
                     description: desc,
                     properties:[
@@ -1043,6 +1165,7 @@ exports.addProduct=(req,res)=>{
                 }))
             }
         }
+    }
 
 
 }
@@ -1094,7 +1217,7 @@ exports.updateProduct=(req,res)=>{
         countSize= countSize +1
         }
     let {id, name, price, desc,type }  = req.body
-
+    
     if(countColor==1){
         if(countSize==1){
             let updateData = {

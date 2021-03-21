@@ -25,15 +25,24 @@ router.get("/login",(req,res)=>{
     res.render("login")
 })
 
+// hiển thị dữ liệu ra trang admin, thông báo sản phẩm sắp hết, kiểm tra thời hạn giảm giá
 router.get('/admin',authenticate, (req,res)=>{     
     var arr =[]// mảng dùng để lưu thông tin thông báo 
     if(req.cookies.user){
         if(req.cookies.user.includes("admin752")){
+             var d= new Date();
                  // dùng mảng để lưu giá trị thông báo sau đó gửi mảng qua ejs
                      product.find({},(err, doc)=>{
                         console.log(doc.length);
                          for(var i=0;i<doc.length;i++){
                              console.log(doc[i].name);
+                             console.log('doc[i].timestart.slice(8,10)',String(doc[i].timestart).slice(0,4)); 
+                             //console.log(d.getDate());
+                             if(Number(String(doc[i].timestart).slice(8,10))===Number(d.getDate()) && 
+                             Number(String(doc[i].timestart).slice(5,7))===(Number(d.getMonth())+1) &&
+                             Number(String(doc[i].timestart).slice(0,4))===Number(d.getFullYear())  ) {
+                                 console.log(' da vao day');
+                             }
                              var namePCheck=doc[i].name
                              var lengthOfproperties=doc[i].properties.length
                              //console.log(lengthOfproperties);
@@ -73,8 +82,10 @@ router.get("/product",(req,res)=>{
     
             })
         }
+        else res.redirect('/productUser')
         
     }
+    else res.redirect('/productUser')
     
 })
 
@@ -127,15 +138,26 @@ router.get('/delete/:id',authController.deleteProduct)
 
 
 router.get('/addProduct',(req,res)=>{
-    res.render('adProduct')
+    if(req.cookies.user){
+        if(req.cookies.user.includes("admin752")){
+            res.render('adProduct')
+        }
+        
+    }
+    else res.redirect('/productUser')
 })
 router.get('/update/:id', (req,res)=>{
-    var id = req.params.id;
-    console.log("id: ",id);
-    console.log(id);
-    productModule.findById(id,(err,result)=>{
-        res.render('update',{result})
-    })
+    if(req.cookies.user){
+        if(req.cookies.user.includes("admin752")){
+            var id = req.params.id;
+            console.log("id: ",id);
+            console.log(id);
+            productModule.findById(id,(err,result)=>{
+                res.render('update',{result})
+            })
+        }        
+        else res.redirect('/productUser')
+    }
    
 })
 
@@ -148,31 +170,40 @@ router.get("/detail/:id",(req,res)=>{
     })    
 })
 
-router.get('/user/history', (req,res)=>{
-    var dataHisttoryUser =[]
-    userCartAndHistory.find({check: "true"},(err,result)=>{
-        for(var i=0; i< result.length;i++){
-            if(result[i].email===req.cookies.user){
-                console.log("trùng khớp");
-                dataHisttoryUser.push(result[i])
-                console.log('dataHisttoryUser',dataHisttoryUser);
-               
-            }
-           
+router.get('/user/history',authenticate, (req,res)=>{
+    if(req.cookies.user){
+        if(req.cookies.user.includes("admin752")){
+            res.redirect('/admin')
+        }else{
+            var dataHisttoryUser =[]
+            userCartAndHistory.find({check: "true"},(err,result)=>{
+                for(var i=0; i< result.length;i++){
+                    if(result[i].email===req.cookies.user){
+                        console.log("trùng khớp");
+                        dataHisttoryUser.push(result[i])
+                        console.log('dataHisttoryUser',dataHisttoryUser);
+                    
+                    }
+                
+                }
+                res.render('historyUser',{results:dataHisttoryUser})    
+            })
         }
-        res.render('historyUser',{results:dataHisttoryUser})
-     
+    }
         
-    })
-   
-   
+        
 })
-router.get('/total',(req,res)=>{
+router.get('/total',authenticate,(req,res)=>{
     //var total=0
     // đầu tiên khi vừa vào sẽ show all data sau khi bấm chọn tháng năm thì mới chuyển qua data theo từng tháng năm 
-    userCartAndHistory.find({check: "true"},(err,resultsOfMonth)=>{
-         res.render('total',{resultsOfMonth})
-    })
+    if(req.cookies.user){
+        if(req.cookies.user.includes("admin752")){
+            userCartAndHistory.find({check: "true"},(err,resultsOfMonth)=>{
+                res.render('total',{resultsOfMonth})
+            })
+        }
+        else res.redirect('/productUser')
+    }
 })
 router.get('/payment/:id/:idFromProduct/:color/:size/:amount',authController.payment)
 

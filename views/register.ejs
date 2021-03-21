@@ -20,16 +20,16 @@
                 
         <div class="form-group">
             <label for="pwd">tên người dùng:</label>
-            <input type="text" class="form-control" id="name" placeholder="Nhập tên" name="name"  value ="">
+            <input type="text" class="form-control" id="name" placeholder="Nhập tên" name="name"  value ="<%=locals.name%>">
         </div>
 
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" placeholder="Nhập email" name="email" value="">
+            <input type="email" class="form-control" id="email" placeholder="Nhập email" name="email" value="<%=locals.email%>">
         </div>
         <div class="form-group">
             <label for="phone">điện thoại:</label>
-            <input type="text" class="form-control" id="phone" placeholder="Nhập số điện thoại" name="phone" value="">
+            <input type="text" class="form-control" id="phone" placeholder="Nhập số điện thoại" name="phone" value="<%=locals.phone%>">
         </div>
 
         <div class="form-group">
@@ -43,10 +43,9 @@
             <input type="password" class="form-control" id="Confpwd" placeholder="Nhập password" name="confirmPassword"  value ="">
         </div>
 
-    
-            <div class="alert alert-danger"> 
-            </div>
-
+            <%if(locals.errMess){%>
+            <div class="alert alert-danger"> <%=locals.errMess%></div>
+            <%}%>
         <button id="register"type="submit" class="btn btn-success">Tạo tài khoản</button>
 
     
