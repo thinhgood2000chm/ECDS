@@ -2304,74 +2304,32 @@ exports.payment= (req,res)=>{
     var id=req.params.id
     var idFromProduct= req.params.idFromProduct
     console.log(idFromProduct);
-    var color= req.params.color;
-    var size = req.params.size;
-    var amount = req.params.amount
+ 
     // cập nhật trạng thái từ false sang true ( từ chwua mua -> đã mua )
     cartAndHistory.findOneAndUpdate({_id: id},{check:'true', acceptAdmin:'true'},{upsert:true},(err,doc)=>{
         if (err) 
             res.send(500, { error: err }); 
         else 
         {console.log("update success");
+        var message="thanh thanh toán thành công"
+         var dataOfUser=[]
+        // show sản phẩm của từng người dùng thông qua email
+        cartAndHistory.find({},(err,data)=>{
+            for(var i=0; i<data.length;i++){
+                //console.log(data[i].email);
+                //console.log(req.cookies.user);
+                if(data[i].email===req.cookies.user){
+                    dataOfUser.push(data[i])
+                    //console.log('dataOfUser',dataOfUser);
+                }
+            }
+            res.render('cart',{ucah:dataOfUser, message})
+            //res.redirect('/cart')
+        })
     }
     })
 
-    product.findOne({_id:idFromProduct},(err,doc)=>{
-        if (err) 
-        res.send(500, { error: err }); 
-        else {
-            /*
-            lấy số lượng trong properties chạy vòng lặp tìm ra màu tương ứng 
-            lấy được vị trí của màu tiếp tục chạy vòng lặp dựa vào số lượng của classify ứng với màu đã tìm 
-            cho chạy classsify nếu gặp size trùng thì lấy gái trị số lượng cần thay đổi
-            */
-
-            var length=doc.properties.length 
-            var dataOfUser=[]
-            //console.log(length);
-            for (var i =0; i<length;i++){
-               // console.log('doc.properties[i].classify',doc.properties[i].classify);
-                //console.log("doc.properties[i]._id",doc.properties[i]._id);
-                idOfProperties= doc.properties[i]._id;
-                if(doc.properties[i].color===color ){
-                    //console.log(doc.properties[i].classify[i].size);
-                    for(var j=0; j<doc.properties[i].classify.length;j++){
-                        if(doc.properties[i].classify[j].size===size ){
-                            // console.log(doc.properties[i].classify[j].size);
-                            var idOfClassify=doc.properties[i].classify[j]._id;
-                            var amountbefore= doc.properties[i].classify[j].amount
-                           // console.log("idOfClassify",idOfClassify);
-                           // console.log("amountbefore",amountbefore);
-                         
-                            var amountAfter= Number(amountbefore) - Number(amount)
-                           // console.log(amountAfter);
-
-                            //update dữ liệu trong bảng product sau khi mua hàng => số lượng còn trong kho thay đổi 
-                            product.updateOne({"_id":idFromProduct},{$set:{"properties.$[o].classify.$[i].amount":amountAfter}},
-                            {arrayFilters:[{'o._id':idOfProperties},{'i._id':idOfClassify}]})
-                            .then(()=> {
-                                console.log("cập nhật thanh cong")
-                               var message="thanh thanh toán thành công"
-                                cartAndHistory.find({},(err,data)=>{
-                                    for(var i=0; i<data.length;i++){
-                                        //console.log(data[i].email);
-                                        //console.log(req.cookies.user);
-                                        if(data[i].email===req.cookies.user){
-                                            dataOfUser.push(data[i])
-                                            //console.log('dataOfUser',dataOfUser);
-                                        }
-                                    }
-                                    res.render('cart',{ucah:dataOfUser, message})
-                                    //res.redirect('/cart')
-                                })
-                                })
-                            .catch(()=>console.log("loi"))
-                        }
-                    }
-                }
-            }
-        }
-    })
+   
 }
 
 exports.deleteItemFCart=(req,res)=>{
@@ -2422,8 +2380,8 @@ exports.totalPrice=(req,res)=>{
 
 // thiết lập khi bấm nút chấp nhận đơn hàng của khách hàng
 exports.accept=(req,res)=>{
-    var {id,nameUser, email, phone, name, image, price, color, size, amount, year, months, type} = req.body
-    console.log(id,nameUser, email, phone, name, image, price, color, size, amount, year, months);
+    var {id,idFromProduct,nameUser, email, phone, name, image, price, color, size, amount, year, months, type} = req.body
+    //console.log(id,nameUser, email, phone, name, image, price, color, size, amount, year, months);
     let newTotal = new total({
         nameUser:nameUser,
         email:email,
@@ -2441,14 +2399,60 @@ exports.accept=(req,res)=>{
     })
     newTotal.save()
     .then(newTotal=>
-        /*res.json({
-            message: "them tk thanh cong"
-        })*/
-        res.redirect('/acceptpayment')
+        console.log(" them total thanh cong")
+        //res.redirect('/acceptpayment')
     )
     .catch(error =>res.json({
         message:'loi ko them duoc tk'
     }))
+ 
+
+    product.findOne({_id:idFromProduct},(err,doc)=>{
+        if (err) 
+        res.send(500, { error: err }); 
+        else {
+            /*
+            lấy số lượng trong properties chạy vòng lặp tìm ra màu tương ứng 
+            lấy được vị trí của màu tiếp tục chạy vòng lặp dựa vào số lượng của classify ứng với màu đã tìm 
+            cho chạy classsify nếu gặp size trùng thì lấy gái trị số lượng cần thay đổi
+            */
+
+            var length=doc.properties.length 
+           
+            //console.log(length);
+            for (var i =0; i<length;i++){
+               // console.log('doc.properties[i].classify',doc.properties[i].classify);
+                //console.log("doc.properties[i]._id",doc.properties[i]._id);
+                idOfProperties= doc.properties[i]._id;
+                if(doc.properties[i].color===color ){
+                    //console.log(doc.properties[i].classify[i].size);
+                    for(var j=0; j<doc.properties[i].classify.length;j++){
+                        if(doc.properties[i].classify[j].size===size ){
+                            // console.log(doc.properties[i].classify[j].size);
+                            var idOfClassify=doc.properties[i].classify[j]._id;
+                            var amountbefore= doc.properties[i].classify[j].amount
+                           // console.log("idOfClassify",idOfClassify);
+                           // console.log("amountbefore",amountbefore);
+                         
+                            var amountAfter= Number(amountbefore) - Number(amount)
+                           // console.log(amountAfter);
+
+                            //update dữ liệu trong bảng product sau khi mua hàng => số lượng còn trong kho thay đổi 
+                            product.updateOne({"_id":idFromProduct},{$set:{"properties.$[o].classify.$[i].amount":amountAfter}},
+                            {arrayFilters:[{'o._id':idOfProperties},{'i._id':idOfClassify}]})
+                            .then(()=> {
+                                console.log("cập nhật thanh cong so luong")
+                         
+                                })
+                            .catch(()=>console.log("loi"))
+                        }
+                    }
+                }
+            }
+        }
+    })
+
+    
     userCartAndHistory.findOneAndUpdate( {_id: id},{checkAdmin:'true', acceptAdmin:'false'},{upsert:true},(err,doc)=>{
         if (err) 
             res.send(500, { error: err }); 

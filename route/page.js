@@ -131,11 +131,11 @@ router.get("/product",(req,res)=>{
         else res.redirect('/productUser')
         
     }
-    else res.redirect('/productUser')
+    else res.redirect('/')
     
 })
 
-router.get("/productUser",(req,res)=>{
+router.get("/",(req,res)=>{
     product.exec((err,data)=>{
         if(err) throw err;
         res.render('productUser',{product:data})
@@ -190,7 +190,7 @@ router.get('/addProduct',(req,res)=>{
         }
         
     }
-    else res.redirect('/productUser')
+    else res.redirect('/')
 })
 router.get('/update/:id', (req,res)=>{
     if(req.cookies.user){
@@ -202,7 +202,7 @@ router.get('/update/:id', (req,res)=>{
                 res.render('update',{result})
             })
         }        
-        else res.redirect('/productUser')
+        else res.redirect('/')
     }
    
 })
@@ -271,5 +271,50 @@ router.get('/payment/:id/:idFromProduct/:color/:size/:amount',authController.pay
 
 router.get("/deleteItemFCart/:id",authController.deleteItemFCart)
 
+// phan nay la link cua header
+
+router.get('/Aothun',(req,res)=>{
+    productModule.find({type:"áo thun"},(err,doc)=>{
+        if(err){
+            res.redirect('/');
+        }
+        else res.render('productUser',{product:doc})
+    })
+})
+router.get('/AoSoMi',(req,res)=>{
+    productModule.find({type:"áo sơ mi"},(err,doc)=>{
+        if(err){
+            res.redirect('/');
+        }
+        else res.render('productUser',{product:doc})
+    })
+})
+
+router.get('/AoKhoac',(req,res)=>{
+    productModule.find({type:"áo khoác"},(err,doc)=>{
+        if(err){
+            res.redirect('/');
+        }
+        else res.render('productUser',{product:doc})
+    })
+})
+
+router.get('/QuanSort',(req,res)=>{
+    productModule.find({type:"quần sort"},(err,doc)=>{
+        if(err){
+            res.redirect('/');
+        }
+        else res.render('productUser',{product:doc})
+    })
+})
+
+router.get('/QuanCongSo',(req,res)=>{
+    productModule.find({type:"quần công sở"},(err,doc)=>{
+        if(err){
+            res.redirect('/');
+        }
+        else res.render('productUser',{product:doc})
+    })
+})
 
 module.exports=router;

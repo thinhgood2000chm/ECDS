@@ -57,7 +57,7 @@
 </div>
 </form>
 <input type="hidden" value="<%=locals.message%>" id="notifSuccess">
-<%if(user){%>
+<%if(locals.user){%>
     <p><%=user.name%></p>
     <a href="/logout">logout</a>
     <p> đây là trang admin</p>
