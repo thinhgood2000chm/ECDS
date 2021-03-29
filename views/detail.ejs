@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
     <title>detail</title>
 
     <style>
@@ -47,16 +50,21 @@
 </head>
 
 <body>
+    <%-include("header")%>
+    <br>
     <div class ="container">
 
     <div class="row">
-        <form action="/detail" method="post">
-        <input type="hidden" id="id" name = "id" value= "<%=result._id%>">
+     
+       
             <div class="col-md-6">
-                <img src="<%=result.image%>" alt="ảnh mẫu"><input type="hidden" name ="image" value ="<%=result.image%>" >
+                <img src="<%=result.image%>" alt="ảnh mẫu" width="400px" height="400px">
             </div>
 
             <div id="detail" class="col-md-6">
+                <form action="/detail" method="post">
+                    <input type="hidden" name ="image" value ="<%=result.image%>" >
+                    <input type="hidden" id="id" name = "id" value= "<%=result._id%>">
                 <h3><b><%=result.name%></b></h3><input type="hidden" name ="name" value ="<%=result.name%>" >
                 <hr>
                 <%if(result.discount!=null){%>
@@ -111,16 +119,16 @@
 
                 <p><b><%=result.description%></b></p>
                
-              
+            </form>
             </div>
 
-        </form>
+    
     </div>
 
 
 
 
-    <h4><center>SẢN PHẨM LIÊN QUAN</center></h4>
+    <!--<h4><center>SẢN PHẨM LIÊN QUAN</center></h4>--->
     <!--<div class="row">
     <div  class="card col-lg-2 col-md-4 col-sm-6" style="width:200px">
           

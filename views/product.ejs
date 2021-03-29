@@ -9,7 +9,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css'>
- 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body>
@@ -37,7 +37,7 @@
   
     }
     .btn{
-        background-color: #ff9933;
+        background-color: #f0e7de;
         margin: 20px;
     }
   
@@ -148,12 +148,14 @@
        <img class="card-img-top" src="<%=p.image%>" alt="Card image cap">
        <div class="card-body">
          <h5 class="card-title"><%=p.name%></h5>
-         <p class="card-text"><%=p.price%></p>
+     
          <%if(p.discount!=null ){%>
-           
-           <p class="card-text"><%=p.price-p.price*p.discount/100%></p>
-           <%}%>
-         <p class="card-text"><small class="text-muted">Áo thun trơn</small></p>
+          <p class="card-text">giá tiền:<strike><%=p.price%></strike>  <%=p.price-p.price*p.discount/100%></p>  
+          <p class="card-text"></p>
+           <%}else{%>
+            <p class="card-text">giá tiền:<%=p.price%></p>
+            <%}%>
+     
        </div>
        <button class="btn btn-danger" id="update" ><a href="/update/<%=p._id%>"><b>Chỉnh sửa</b></a></button>   
       <button class="btn btn-danger" id="btnDelete"><a href="/delete/<%=p._id%>"><b>Xóa</b></a></button>

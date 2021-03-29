@@ -1,45 +1,223 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Trang admin</title>
+	<!-- <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css'> -->
 
-    <script type = "text/JavaScript">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+     <script type = "text/JavaScript">
       
            function AutoRefresh( t ) {
               setTimeout("location.reload(true);", t);
            }
 
      </script>
+
+     <style type="text/css">
+
+     	body{
+     		background-color: white;
+     	}
+
+     	table{
+     		text-align: center;
+     	}
+
+     	#dropdownMenuButton{
+     		width: 100%;
+     	}
+         #linka{
+             color:white;
+             
+         }
+     </style>
+
+
 </head>
 <body onload = "JavaScript:AutoRefresh(5*60*1000);">
-    <%if(user){%>
-    <p><%=user.name%></p>
-    <a href="/logout">logout</a>
-    <p> đây là trang admin</p>
-    <%}%>
-    
- nằm ở menu sản PHẨM
- <button class="btn btn-success"><a href="/product">sản phẩm đang bán</a></button>
- <button class="btn btn-success"><a href="/addProduct">thêm sản phẩm</a></button>
-    
-    <input type="text" value="<%=locals.arr%>" name="notification" id="notification" >
-        
-    <script>
- 
- 
-        var notification= document.getElementById('notification').value
-       
-        if(notification!==''){       
-            alert(notification.split(',').join("\n"))// xuoongs dong trong alert
-        }
-        </script>
-    
-       
+	<%- include("header")%>
+	<br>
+	<div class="container">
+		<input type="hidden" value="<%=locals.arr%>" name="notification" id="notification" >
+		<!-- Chỗ này thay bằng header vào cũng đc-->
+			<div class="row">
+				<div class="col-lg-2">
+			
+				</div>
+				<div class="col-lg-8">
+					<h3 style="text-align:center; ">CỬA HÀNG BÁN QUẦN ÁO NAM</h3><br>
+				</div>
+			
+			</div>
 
-    
-    
+			<br>
+			<div class="row">
+				<div class="col-lg-2" style="border-right: 1px solid black">
+
+					<!--<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Vận chuyển
+						</button>
+					  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						    <a class="dropdown-item" href="#">Vận chuyển</a>
+						    <a class="dropdown-item" href="#">Quản lí vận chuyển</a>
+						    <a class="dropdown-item" href="#">Giao hàng loạt</a>
+					  	</div>
+					</div>-->
+					<br>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Quản lí đơn hàng
+						</button>
+					  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						    <a class="dropdown-item" href="/acceptPayment">Đơn chờ xác nhận</a>
+						    <a class="dropdown-item" href="#">Đơn hủy</a>
+						    <a class="dropdown-item" href="#">Trả hàng/hoàn tiền</a>
+					  	</div>
+					</div>
+					<br>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Quản lí sản phẩm
+						</button>
+					  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						    <a class="dropdown-item" href="/addProduct">Thêm sản phẩm</a>
+						    <a class="dropdown-item" href="/product">Sản phẩm đang bán</a>
+						    <!--<a class="dropdown-item" href="#">Số lượng sản phẩm</a>-->
+					  	</div>
+					</div>
+					<br>
+					<!--<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Kênh Marketing
+						</button>
+					  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						    <a class="dropdown-item" href="#">Vận chuyển</a>
+						    <a class="dropdown-item" href="#">Quản lí vận chuyển</a>
+						    <a class="dropdown-item" href="#">Giao hàng loạt</a>
+					  	</div>
+					</div>-->
+					<br>
+					<!--<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Thống kê doanh thu
+						</button>
+					  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						    <a class="dropdown-item" href="#">Theo ngày</a>
+						    <a class="dropdown-item" href="#">Theo tuần</a>
+						    <a class="dropdown-item" href="#">Theo tháng</a>
+					  	</div
+					</div>>-->
+                    <div>
+                        <button class="btn btn-primary"><a id="linka"href="/total" type="button">Thống kê doanh thu</a></button>
+                    </div>
+				</div>
+				<div class="col-lg-10">
+					<!-- <h3 style="text-align:center; ">CỬA HÀNG BÁN QUẦN ÁO NAM</h3><br> -->
+			
+					<br>
+					<div>
+						<h4 style="text-align: left;"><b>Danh sách cần làm</b></h4><br>
+						<table class="table">
+							<tr>
+								<td>
+									<div class="card">
+										<span style="color: blue; text-align: center;"><b>0</b></span>
+										<div class="card-body" style="text-align: center;">
+											Chờ xác nhận
+										</div>
+									</div>
+								</td>
+								<td>
+									<div class="card">
+										<span style="color: blue; text-align: center;"><b>0</b></span>
+										<div class="card-body" style="text-align: center;">
+											Chờ lấy hàng
+										</div>
+									</div>
+								</td>
+								<td>
+									<div class="card">
+										<span style="color: blue; text-align: center;"><b>0</b></span>
+										<div class="card-body" style="text-align: center;">
+											Đã xử lí
+										</div>
+									</div>
+								</td>
+								<td>
+									<div class="card">
+										<span style="color: blue; text-align: center;"><b>0</b></span>
+										<div class="card-body" style="text-align: center;">
+											Đơn hủy
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="card">
+										<span style="color: blue; text-align: center;"><b>0</b></span>
+										<div class="card-body" style="text-align: center;">
+											Trả hàng
+										</div>
+									</div>
+								</td>
+								<td>
+									<div class="card">
+										<span style="color: blue; text-align: center;"><b>0</b></span>
+										<div class="card-body" style="text-align: center;">
+											Sản phẩm tạm khóa
+										</div>
+									</div>
+								</td>
+								<td>
+									<div class="card">
+										<span style="color: blue; text-align: center;"><b>0</b></span>
+										<div class="card-body" style="text-align: center;">
+											Sản phẩm hết hàng
+										</div>
+									</div>
+								</td>
+								<td>
+									<div class="card">
+										<span style="color: blue; text-align: center;"><b>0</b></span>
+										<div class="card-body" style="text-align: center;">
+											Khuyễn mãi
+										</div>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+
+
+			<script>
+ 
+		        var notification= document.getElementById('notification').value
+		       
+		        if(notification!==''){       
+		            alert(notification.split(',').join("\n"))// xuoongs dong trong alert
+		        }
+		    </script>
+
+		</div>
 </body>
 </html>

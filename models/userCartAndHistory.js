@@ -7,7 +7,7 @@ const UserCartAndHistory= new Schema({
     nameUser: String,
     email: String,
     phone:String,
-    check: String,
+    check: String,// dùng để hiên thị trạng thái nếu false chwua mua, true đã mua 
     checkAdmin:String,// dùng để hiển thị sản phẩm lên trang total 
     acceptAdmin:String,// dùng để hiển thị hoặc xóa sp sau khi đã bấm chấp nhận
     type:String,

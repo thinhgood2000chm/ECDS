@@ -2,13 +2,6 @@
 <html>
 <head>
 	<title>Header</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css'>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 </head>
@@ -88,32 +81,50 @@
 			<div class="top-nav"> 
 				<div class="row"> 
 					<div class="col-lg-4 col-md-4"> 
-						<a href="#" target="_blank">About us</a>
-						<a href="#" target="_blank">Contact</a>
-						<a href="#" target="_blank">Product</a>
+						<a href="#" target="_parent">About us</a>
+						<a href="#" target="_parent">Contact</a>
+						<a href="#" target="_parent">Product</a>
 						<!-- <a href="#" target="_blank">Terms</a> -->
 					</div>
 					<div class="col-lg-6 col-md-6"> 
 						<form action="/search" method="post" class="abc">
-						<input type="search" name="dataNameType" value="" placeholder="Nhập từ khóa...">
-						<button class="btn btn-primary" type="submit" value="Submit">Tìm kiếm</button>
+							<input type="search" name="dataNameType" value="" placeholder="Nhập từ khóa...">
+							<button class="btn btn-primary" type="submit" value="Submit">Tìm kiếm</button>
 						</form>
 					</div>
-					<div class="col-lg-2 col-md-2 dropdown">
-	
+					
+					<div class="col-lg-2 col-md-2 dropdown dropdownlist">
 						
-								<a class="dropdown-toggle" type="button" data-toggle="dropdown">	<i id="userIcon" class="fa fa-user-circle-o"  style="font-size:24px"></i> 
-								<span class="caret"></span></á>
-								<ul class="dropdown-menu">
-								  <li><a href="#">HTML</a></li>
-								  <li><a href="#">CSS</a></li>
-								  <li><a href="#">JavaScript</a></li>
-								</ul>
+							<!-- <a class="dropdown-toggle" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+								<i id="userIcon" class="fa fa-user-circle-o"  style="font-size:24px"></i> 
+							</a> -->
+						  
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+							  <li><a class="dropdown-item" href="/user/history">Lịch sử mua hàng</a></li>
+							  <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
+							  <div class="dropdown-divider"></div>
+							  <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
+							</ul>
+					
+						
+							<a class="dropdown-toggle" type="button" data-toggle="dropdown" >	
+								<i id="userIcon" class="fa fa-user-circle-o"  style="font-size:24px"></i> 
+								<span class="caret"></span>
+							</a>
+
+			
 						
 						
 						
-       					<a href="/cart"> <i id= "cartIcon" class="fa fa-shopping-cart" style="font-size:24px"></i></a>
+       					<a href="/cart"><i id= "cartIcon" class="fa fa-shopping-cart" style="font-size:24px"></i></a><br>
+						   <span style="text-align: right; color:white"><%if(locals.user){%>Xin chào:
+							 <%=user.name%>!
+						   <%} else{%>
+							<a href="/login">Đăng nhập</a>
+						<%}%></span>
+					
 					</div>
+				
 				</div>
 			</div>
 			<!--End Top nav-->
@@ -138,7 +149,6 @@
 			<!--Mid nav-->
 			<div class="mid-nav" id="myMidnav"> 
 				<div class="row"> 
-					<!-- parent để load và ko chuyển qua trang khác-->
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
 						<a href="/" class="active" target="_parent">Trang chủ</a>
 						<a href="/Aothun" target="_parent">Áo thun</a>
