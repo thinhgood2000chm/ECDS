@@ -68,5 +68,4 @@ label.star:before {
         chưa chia router cho những file của admin và những file của user
         chưa cps các đk đăng nhập đk và nút bấm thêm sản phẩm
        giảm giá , yêu cầu của khách hàng
-        tổng tiền theo tháng chưa làm được ( mới chỉ tính tổng tất cả tiền)
-        chưa tìm kiếm , pagination trong các trang 
+        chưa  pagination trong các trang       

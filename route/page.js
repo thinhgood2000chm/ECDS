@@ -29,10 +29,6 @@ router.get('/admin',authenticate, (req,res)=>{
     var arr =[]// mảng dùng để lưu thông tin thông báo 
     if(req.cookies.user){
         if(req.cookies.user.includes("admin752")){
-            /*countData.findOne({_id:"6052c92740e2ecb346533a29"},(err,doc)=>{
-                 console.log(doc.size);
-                 var sizeOfProduct =doc.size */
-               
                  // dùng mảng để lưu giá trị thông báo sau đó gửi mảng qua ejs
                      product.find({},(err, doc)=>{
                         console.log(doc.length);
@@ -63,15 +59,22 @@ router.get('/admin',authenticate, (req,res)=>{
             // })
 
         }
+        else res.redirect('/cart')
     }
-    else res.redirect('/cart')
+
     
 })
 router.get("/product",(req,res)=>{
-  product.exec((err,data)=>{
-      if(err) throw err;
-      res.render('product',{product:data})
-  })
+    if(req.cookies.user){
+        if(req.cookies.user.includes("admin752")){
+            product.exec((err,data)=>{
+                if(err) throw err;
+                res.render('product',{product:data})
+    
+            })
+        }
+        
+    }
     
 })
 
@@ -85,32 +88,31 @@ router.get("/productUser",(req,res)=>{
 
 router.get("/cart",authenticate,(req,res)=>{
     var dataOfUser= []
-   if(req.cookies.user){
-    if(!req.cookies.user.includes("admin752")){
-        /*ucah.exec((err,data)=>{
-            
-            if(err) throw err;
-            res.render('cart',{ucah:data, message:""})
-        })*/
-        userCartAndHistory.find({},(err,data)=>{
-            for(var i=0; i<data.length;i++){
-                console.log(data[i].email);
-                console.log(req.cookies.user);
-                if(data[i].email===req.cookies.user){
-                    dataOfUser.push(data[i])
-                    console.log('dataOfUser',dataOfUser);
-                    //console.log('data',data);
-                   // return res.render('cart',{ucah:data, message:""})
-                }
-            }
-            res.render('cart',{ucah:dataOfUser, message:""})
-            //res.render('cart',{ucah=""})
-        })
+  // if(req.cookies.user){
+    if(req.cookies.user.includes("admin752")){
+
+        res.redirect('/admin')
        
-      }
-      else res.redirect('/admin')
-    }
-        
+     }
+
+      else{       
+        userCartAndHistory.find({},(err,data)=>{
+        for(var i=0; i<data.length;i++){
+            console.log(data[i].email);
+            console.log(req.cookies.user);
+            if(data[i].email===req.cookies.user){
+                dataOfUser.push(data[i])
+                console.log('dataOfUser',dataOfUser);
+                //console.log('data',data);
+               // return res.render('cart',{ucah:data, message:""})
+            }
+        }
+        res.render('cart',{ucah:dataOfUser, message:""})
+
+    })
+}
+  //  }
+ 
     
 
 })
@@ -167,8 +169,9 @@ router.get('/user/history', (req,res)=>{
 })
 router.get('/total',(req,res)=>{
     //var total=0
-    userCartAndHistory.find({check: "true"},(err,results)=>{
-         res.render('total',{results})
+    // đầu tiên khi vừa vào sẽ show all data sau khi bấm chọn tháng năm thì mới chuyển qua data theo từng tháng năm 
+    userCartAndHistory.find({check: "true"},(err,resultsOfMonth)=>{
+         res.render('total',{resultsOfMonth})
     })
 })
 router.get('/payment/:id/:idFromProduct/:color/:size/:amount',authController.payment)

@@ -11,7 +11,8 @@ const fs = require('fs');
 const userCartAndHistory = require('../models/userCartAndHistory')
 //var ucah= userCartAndHistory.find({})
 const session = require("express-session");
-const total = require('../models/total')
+const { type } = require("os");
+
 
 
 exports.register = (req,res, next)=>{
@@ -132,10 +133,11 @@ exports.addProduct=(req,res)=>{
 
            // uploadImage
       
-    var {name,desc,price} = req.body
+    var {name,desc,price,type} = req.body
         if(countColor==1){
             if(countSize==1){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -158,6 +160,7 @@ exports.addProduct=(req,res)=>{
             
             else if(countSize==2){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -180,6 +183,7 @@ exports.addProduct=(req,res)=>{
             }
             else if(countSize==3){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -203,6 +207,7 @@ exports.addProduct=(req,res)=>{
             }
             else if(countSize==4){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -232,6 +237,7 @@ exports.addProduct=(req,res)=>{
         if(countColor==2){
             if(countSize==1){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -257,6 +263,7 @@ exports.addProduct=(req,res)=>{
             }
             else if(countSize==2){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -284,6 +291,7 @@ exports.addProduct=(req,res)=>{
             }
             else if(countSize==3){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -313,6 +321,7 @@ exports.addProduct=(req,res)=>{
             }
             else if(countSize==4){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -350,6 +359,7 @@ exports.addProduct=(req,res)=>{
         if(countColor==3){
             if(countSize==1){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -378,6 +388,7 @@ exports.addProduct=(req,res)=>{
             }
             else if(countSize==2){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -409,6 +420,7 @@ exports.addProduct=(req,res)=>{
             }
             else if(countSize==3){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -443,6 +455,7 @@ exports.addProduct=(req,res)=>{
             }
             else if(countSize==4){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -488,6 +501,7 @@ exports.addProduct=(req,res)=>{
         if(countColor==4){
             if(countSize==1){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -519,6 +533,7 @@ exports.addProduct=(req,res)=>{
             }
             else if(countSize==2){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -554,6 +569,7 @@ exports.addProduct=(req,res)=>{
             }
             else if(countSize==3){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -593,6 +609,7 @@ exports.addProduct=(req,res)=>{
             }
             else if(countSize==4){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -646,6 +663,7 @@ exports.addProduct=(req,res)=>{
         if(countColor==5){
             if(countSize==1){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -683,6 +701,7 @@ exports.addProduct=(req,res)=>{
             }
             else if(countSize==2){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -722,6 +741,7 @@ exports.addProduct=(req,res)=>{
             }
             else if(countSize==3){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -766,6 +786,7 @@ exports.addProduct=(req,res)=>{
             }
             else if(countSize==4){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -826,6 +847,7 @@ exports.addProduct=(req,res)=>{
         if(countColor==5){
             if(countSize==1){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -866,6 +888,7 @@ exports.addProduct=(req,res)=>{
             }
             else if(countSize==2){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -909,6 +932,7 @@ exports.addProduct=(req,res)=>{
             }
             else if(countSize==3){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -958,6 +982,7 @@ exports.addProduct=(req,res)=>{
             }
             else if(countSize==4){
                 let addProduct = new product({
+                    type:type,
                     name: name,
                     price: price,
                     image: image,
@@ -1025,21 +1050,21 @@ exports.addProduct=(req,res)=>{
 exports.deleteProduct=(req,res)=>{
     if(!req.params.id)
     res.json({code:1, message:"invalid data"})
-else 
-{
-    var id = req.params.id   
-    console.log(id);
-    product.findByIdAndRemove(id)
-    .then(()=>
-        /*res.json({
-            message: "xóa người dùng thành công"
-        })*/
-        res.redirect('/product')
-    )
-    .catch(error =>res.json({
-        message:'xóa thất bại'
-    }))
-}
+    else 
+    {
+        var id = req.params.id   
+        console.log(id);
+        product.findByIdAndRemove(id)
+        .then(()=>
+            /*res.json({
+                message: "xóa người dùng thành công"
+            })*/
+            res.redirect('/product')
+        )
+        .catch(error =>res.json({
+            message:'xóa thất bại'
+        }))
+    }
 }
 
 
@@ -1048,7 +1073,7 @@ exports.updateProduct=(req,res)=>{
 
     var img = req.file;
     console.log(img);
-     image= `public/upload/${img.originalname}`
+    image= `public/upload/${img.originalname}`
     fs.renameSync(img.path, image)
     var pathImage = image.slice(6)
 
@@ -1068,11 +1093,12 @@ exports.updateProduct=(req,res)=>{
     for( var j =0; j<inputSize.length;j++){
         countSize= countSize +1
         }
-    let {id, name, price, desc }  = req.body
+    let {id, name, price, desc,type }  = req.body
 
     if(countColor==1){
         if(countSize==1){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1096,6 +1122,7 @@ exports.updateProduct=(req,res)=>{
 
         else if(countSize==2){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1120,6 +1147,7 @@ exports.updateProduct=(req,res)=>{
 
         else if(countSize==3){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1145,6 +1173,7 @@ exports.updateProduct=(req,res)=>{
 
         else if(countSize==4){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1174,6 +1203,7 @@ exports.updateProduct=(req,res)=>{
     if(countColor==2){
         if(countSize==1){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1201,6 +1231,7 @@ exports.updateProduct=(req,res)=>{
 
         else if(countSize==2){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1230,6 +1261,7 @@ exports.updateProduct=(req,res)=>{
 
         else if(countSize==3){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1261,6 +1293,7 @@ exports.updateProduct=(req,res)=>{
 
         else if(countSize==4){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1296,6 +1329,7 @@ exports.updateProduct=(req,res)=>{
     if(countColor==3){
         if(countSize==1){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1326,6 +1360,7 @@ exports.updateProduct=(req,res)=>{
 
         else if(countSize==2){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1359,6 +1394,7 @@ exports.updateProduct=(req,res)=>{
 
         else if(countSize==3){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1395,6 +1431,7 @@ exports.updateProduct=(req,res)=>{
 
         else if(countSize==4){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1436,6 +1473,7 @@ exports.updateProduct=(req,res)=>{
     if(countColor==4){
         if(countSize==1){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1469,6 +1507,7 @@ exports.updateProduct=(req,res)=>{
 
         else if(countSize==2){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1506,6 +1545,7 @@ exports.updateProduct=(req,res)=>{
 
         else if(countSize==3){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1547,6 +1587,7 @@ exports.updateProduct=(req,res)=>{
 
         else if(countSize==4){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1595,6 +1636,7 @@ exports.updateProduct=(req,res)=>{
     if(countColor==5){
         if(countSize==1){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1631,6 +1673,7 @@ exports.updateProduct=(req,res)=>{
 
         else if(countSize==2){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1672,6 +1715,7 @@ exports.updateProduct=(req,res)=>{
 
         else if(countSize==3){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1718,6 +1762,7 @@ exports.updateProduct=(req,res)=>{
 
         else if(countSize==4){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1772,6 +1817,7 @@ exports.updateProduct=(req,res)=>{
     if(countColor==6){
         if(countSize==1){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1811,6 +1857,7 @@ exports.updateProduct=(req,res)=>{
 
         else if(countSize==2){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1856,6 +1903,7 @@ exports.updateProduct=(req,res)=>{
 
         else if(countSize==3){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1907,6 +1955,7 @@ exports.updateProduct=(req,res)=>{
 
         else if(countSize==4){
             let updateData = {
+                type: type,
                 name: name,
                 price: price,
                 image: pathImage,
@@ -1972,6 +2021,7 @@ exports.InsertCart= (req,res)=>{
         jwt.verify(token,'secrectValue', async (err, decode)=>{
                 //console.log(decode);
                 let user = await User.findById(decode.id)
+                var d = new Date()
                 let addNewCAH = new cartAndHistory({
                     idFromProduct: id,
                     nameUser: user.name,
@@ -1983,7 +2033,9 @@ exports.InsertCart= (req,res)=>{
                     price: price,
                     color: color,
                     size: size,
-                    amount: amount
+                    amount: amount,
+                    year:d.getFullYear(),
+                    months:String(Number(d.getMonth())+1),
                 })
                 addNewCAH.save()
                 .then(addNewCAH=>
@@ -2016,21 +2068,6 @@ exports.payment= (req,res)=>{
             res.send(500, { error: err }); 
         else 
         {console.log("update success");
-            // insert data vào bảng total
-        var d = new Date()
-        let totals = new total({
-            year:d.getFullYear(),
-            months:String(Number(d.getMonth())+1),
-            totalPrice: doc.price
-        })
-        totals.save()
-        .then(()=>{
-            console.log('them total thành công');
-        }
-        )
-        .catch(error =>res.json({
-            message:'loi ko them duoc '
-        }))
     }
     })
 
@@ -2048,21 +2085,21 @@ exports.payment= (req,res)=>{
             var dataOfUser=[]
             //console.log(length);
             for (var i =0; i<length;i++){
-                console.log('doc.properties[i].classify',doc.properties[i].classify);
+               // console.log('doc.properties[i].classify',doc.properties[i].classify);
                 //console.log("doc.properties[i]._id",doc.properties[i]._id);
                 idOfProperties= doc.properties[i]._id;
                 if(doc.properties[i].color===color ){
                     //console.log(doc.properties[i].classify[i].size);
                     for(var j=0; j<doc.properties[i].classify.length;j++){
                         if(doc.properties[i].classify[j].size===size ){
-                             console.log(doc.properties[i].classify[j].size);
+                            // console.log(doc.properties[i].classify[j].size);
                             var idOfClassify=doc.properties[i].classify[j]._id;
                             var amountbefore= doc.properties[i].classify[j].amount
-                            console.log("idOfClassify",idOfClassify);
-                            console.log("amountbefore",amountbefore);
+                           // console.log("idOfClassify",idOfClassify);
+                           // console.log("amountbefore",amountbefore);
                          
                             var amountAfter= Number(amountbefore) - Number(amount)
-                            console.log(amountAfter);
+                           // console.log(amountAfter);
 
                             //update dữ liệu trong bảng product sau khi mua hàng => số lượng còn trong kho thay đổi 
                             product.updateOne({"_id":idFromProduct},{$set:{"properties.$[o].classify.$[i].amount":amountAfter}},
@@ -2076,7 +2113,7 @@ exports.payment= (req,res)=>{
                                         //console.log(req.cookies.user);
                                         if(data[i].email===req.cookies.user){
                                             dataOfUser.push(data[i])
-                                            console.log('dataOfUser',dataOfUser);
+                                            //console.log('dataOfUser',dataOfUser);
                                         }
                                     }
                                   
@@ -2110,31 +2147,51 @@ exports.deleteItemFCart=(req,res)=>{
 }
 }
 
-// tính tổng tiền theo tứng tháng
+// tính tổng tiền theo tứng tháng và hiển thị dữ liệu của từng tháng
 exports.totalPrice=(req,res)=>{
     var{ year, month}= req.body
-    console.log('year',year);
+
     var totals = 0;
+    var resultsOfMonth=[]
     userCartAndHistory.find({check: "true"},(err,results)=>{
-        total.find({year:year},(err,doc)=>{
+        //total.find({year:year},(err,doc)=>{
             if(err){
                 res.json({error: err})
             }
             else{
-                for(var i =0; i< doc.length;i++){
-                    if(doc[i].year === year && doc[i].months===month){
-                            totals =totals+doc[i].totalPrice
-                    }
-                    else {
-                        res.render('total',{results,totals})
+                for(var i =0; i< results.length;i++){
+                   // console.log(results[i].year);
+                   // console.log(results[i].year);
+                    if(results[i].year === year && results[i].months===month){
+                            totals =totals+results[i].price
+                           // console.log(' ddax vao dau');
+                            resultsOfMonth.push(results[i])
                     }
                     
                 }
-                res.render('total',{results,totals});
+                res.render('total',{resultsOfMonth,totals});
     
             }
-        })
+       // })
     })
 }
 
+exports.search=(req,res)=>{
+    var {dataF, dataT, dataNameType} = req.body
+    var productSearch=[]
+    console.log(dataF, dataT);
+    product.find({},(err, results)=>{
+        for(var i=0;i<results.length;i++){
+            if(dataNameType===results[i].name||dataNameType===results[i].type){
+                console.log("tim theo type",results[i]);
+                productSearch.push(results[i])
+            }
+            else if(Number(dataF)<=results[i].price&& results[i].price<=Number(dataT)){
+                console.log("tim theo gia",results[i].price);
+                productSearch.push(results[i])
+            }
+        }
+        res.render('productUser',{product:productSearch})
+    })
+}
 

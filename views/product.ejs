@@ -82,14 +82,17 @@
 
 <div class="row">
     <div class="col-md-3">
-        <div class="container">
-            <h4>bộ lọc tiềm kiếm</h4>
-            <p>tìm kiếm theo giá </p>
-            từ: <input class="ft"type="text" > tới: <input class ="ft" type="text" >
-            <br>
-   
-            <buton class="btn">tìm kiếm</buton>
-        <hr>
+      <div class="container">
+        <form action="/search" method="post">
+          <h4>bộ lọc tiềm kiếm</h4>
+          <p>tìm kiếm theo giá </p>
+          từ: <input class="ft"type="text" name = 'dataF'> tới: <input class ="ft" type="text" name = 'dataT'>
+          <br>
+          <p>tìm kiếm theo tên</p>
+          <input class="findByName" type="text" name = 'dataName' >
+          <input type="submit" class="btn" value="tìm kiếm">
+      <hr>
+    </form>
         </div>
     </div>
    

@@ -8,12 +8,15 @@ const UserCartAndHistory= new Schema({
     email: String,
     phone:String,
     check: String,
+    type:String,
     name: String,
     image: String,
     price: Number,
     color: String,
     size: String,
-    amount: Number
+    amount: Number,
+    year:String,
+    months: String
 
 },{timestamps: true})
 const cartAndHistory = mongoose.model('cartAndHistory',UserCartAndHistory,'cartAndHistory')
