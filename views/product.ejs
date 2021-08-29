@@ -149,7 +149,7 @@
        <div class="card-body">
          <h5 class="card-title"><%=p.name%></h5>
      
-         <%if(p.discount!=null ){%>
+         <%if(p.discount!=null && p.checkDiscount==='true'){%>
           <p class="card-text">giá tiền:<strike><%=p.price%></strike>  <%=p.price-p.price*p.discount/100%></p>  
           <p class="card-text"></p>
            <%}else{%>

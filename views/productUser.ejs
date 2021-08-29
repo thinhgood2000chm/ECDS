@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>trang chủ</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -167,7 +167,7 @@
           <img class="card-img-top" src="<%=p.image%>" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title"><%=p.name%></h5>
-            <%if(p.discount!=null ){%>
+            <%if(p.discount!=null && p.checkDiscount==='true'){%>
               <p class="card-text">giá tiền:<strike><%=p.price%></strike>  <%=p.price-p.price*p.discount/100%></p>  
               <p class="card-text"></p>
                <%}else{%>
